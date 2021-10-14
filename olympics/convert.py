@@ -17,9 +17,19 @@ if __name__ == "__main__":
     new_noc_team_file = open('./nocs_teams.csv', 'w')
     noc_team_writer = csv.writer(new_noc_team_file)
 
+    new_olympics_file = open('./olympics.csv', 'w')
+    olympics_writer = csv.writer(new_olympics_file)
+
+    new_olympics_athlete_file = open('./olympics_athletes.csv', 'w')
+    olympics_athletes_writer = csv.writer(new_olympics_athlete_file)
+
+    new_olympics_medals_file = open('./olympics_medals.csv', 'w')
+    olympics_medals_writer = csv.writer(new_olympics_medals_file)
+
     # used for checking uniqueness
-    unique_athlete_dict = {}
-    unique_noc_dict = {}
+    unique_athlete = {}
+    unique_noc = {}
+    unique_oylmpic_by_year = {}
     # NOC used to match
 
     with open('athlete_events.csv') as athlete_events_file, open('noc_regions.csv') as noc_region_file:
@@ -30,6 +40,8 @@ if __name__ == "__main__":
 
         athletes_count = 0
         skip_athlete_events = True
+
+        olympics_id = 0
         for row in athlete_file_reader:
             # skip the first row of both readers, redundant column names
             if(skip_athlete_events):
@@ -37,11 +49,11 @@ if __name__ == "__main__":
             else:
                 athlete_id = row[0]
                 # only write to athletes.csv if athlete is unique based on data set provided id
-                if(not unique_athlete_dict.get(athlete_id, False)):
+                if(not unique_athlete.get(athlete_id, False)):
                     athletes_count += 1
-                    unique_athlete_dict[athlete_id] = True
+                    unique_athlete[athlete_id] = True
 
-                    athlete_name = row[1]
+                    athlete_name = row[1].replace(",", '')
                     name_destructured = athlete_name.split(' ')
                     last_name = name_destructured[-1]
                     first_name = name_destructured[0]
@@ -53,8 +65,22 @@ if __name__ == "__main__":
                 # noc are inconsistent in athlete_event.csv and noc_regions.csv (Singapore is SIN in noc_regions and SGP in athlete_events), we will take the version shown in athlete_event since it'll be used to link athletes with their team/country later
                 noc = row[7].replace("\"", '')
                 team = row[6]
-                if(not unique_noc_dict.get(noc, False)):
-                    unique_noc_dict[noc] = team
+                if(not unique_noc.get(noc, False)):
+                    unique_noc[noc] = [team]
+
+                year = row[9]
+
+                # write out to olympics.csv
+                # check year for uniqueness, there should only be 1 olympic per year
+                if(not unique_oylmpic_by_year.get(year, False)):
+
+                    game = row[8]
+                    season = row[10]
+                    city = row[11]
+                    olympics_writer.writerow(
+                        [olympics_id, year, season, game, city])
+                    unique_oylmpic_by_year[year] = olympics_id
+                    olympics_id += 1
 
         # write out to noc_regions.csv
         skip_noc = True
@@ -68,26 +94,65 @@ if __name__ == "__main__":
                 notes = row[2]
 
                 # if the noc doesn't exist here after parsing athlete_events, there's inconsistencies so we need to parse the value of "team" from athlete_events and compare it with "region" from athlete_events.csv
-                if(not unique_noc_dict.get(noc, False)):
+                if(not unique_noc.get(noc, False)):
                     written = False
-                    for key in unique_noc_dict.keys():
-                        if(unique_noc_dict.get(noc, False) and region in unique_noc_dict[noc]):
+                    for key in unique_noc.keys():
+                        if(unique_noc.get(noc, False) and region in unique_noc[noc]):
                             written = True
                             # prioritize the NOC spelling in athlete_events
+                            unique_noc[key] = [team, noc_id]
                             noc_team_writer.writerow(
-                                [noc_id, key, unique_noc_dict[key], region, notes])
+                                [noc_id, key, unique_noc[key][0], region, notes])
 
                     # we only want to write to csv ONCE per new noc we haven't encountered
                     if(not written):
                         print([noc_id, noc, None, region, notes], "check this")
+                        unique_noc[noc] = [region, noc_id]
                         noc_team_writer.writerow(
                             [noc_id, noc, None, region, notes])
 
                 else:
+                    unique_noc[noc] = [unique_noc[noc][0], noc_id]
                     noc_team_writer.writerow(
-                        [noc_id, noc, unique_noc_dict[noc], region, notes])
+                        [noc_id, noc, unique_noc[noc][0], region, notes])
 
                 noc_id += 1
-
         print(noc_id, " # of noc")
         print(athletes_count, " # of athletes")
+    # parse linking tables olympics_medals and olympics_athletes
+    with open('athlete_events.csv') as athlete_events_file:
+        skip_athlete_events = True
+        athlete_file_reader = csv.reader(athlete_events_file)
+        for row in athlete_file_reader:
+            if(skip_athlete_events):
+                skip_athlete_events = False
+            else:
+
+                athlete_id = row[0]
+                olympic_id = unique_oylmpic_by_year[row[9]]
+                # unique noc has array inside [team, noc_id]
+                noc_id = unique_noc[row[7]][1]
+
+                height = row[4]
+                weight = row[5]
+                age = row[3]
+
+                if(height == "NA"):
+                    height = None
+                if(weight == "NA"):
+                    weight = None
+                if(age == "NA"):
+                    weight = None
+
+                olympics_athletes_writer.writerow(
+                    [athlete_id, olympic_id, noc_id, height, weight, age])
+
+                sport = row[12]
+                event = row[13]
+                medal = row[14]
+
+                if(medal == "NA"):
+                    medal = None
+
+                olympics_medals_writer.writerow([
+                    athlete_id, olympic_id, sport, event, medal])

@@ -5,11 +5,12 @@
 
     Credit: Dani Bottiger for giving useful suggestions for per_olympic_athlete and table_earned tables 
 
+ "ID","Name","Sex","Age","Height","Weight","Team","NOC","Games","Year","Season","City","Sport","Event","Medal"
 '''
 
 
 CREATE TABLE athletes (
-    id SERIAL,
+    id integer,
     full_name text,
     first_name text,
     last_name text,
@@ -17,7 +18,7 @@ CREATE TABLE athletes (
 );
 
 CREATE TABLE nocs_teams (
-    id SERIAL,
+    id integer,
     noc text UNIQUE,
     team text,
     region text,
@@ -25,8 +26,8 @@ CREATE TABLE nocs_teams (
 );
 
 CREATE TABLE olympics (
-    id SERIAL,
-    year integer UNIQUE,
+    id integer,
+    year integer,
     season text,
     game text,
     city text
