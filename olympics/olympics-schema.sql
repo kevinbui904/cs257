@@ -3,16 +3,20 @@
 
     Author: Thien K. M. Bui 10-11-21
 
+    Credit: Dani Bottiger for giving useful suggestions for per_olympic_athlete and table_earned tables 
+
 '''
 
 
 CREATE TABLE athletes (
     id SERIAL,
-    name text UNIQUE,
+    full_name text,
+    first_name text,
+    last_name text,
     sex text
 );
 
-CREATE TABLE noc_team (
+CREATE TABLE nocs_teams (
     id SERIAL,
     noc text UNIQUE,
     team text,
@@ -20,14 +24,27 @@ CREATE TABLE noc_team (
     notes text
 );
 
-CREATE TABLE games (
+CREATE TABLE olympics (
+    id SERIAL,
     year integer UNIQUE,
+    season text,
     game text,
+    city text
 );
 
-CREATE TABLE game_athlete_noc(
-    id SERIAL,
-    year integer,
+CREATE TABLE olympics_athletes(
     athlete_id integer,
+    olympic_id integer,
     noc_id integer,
+    height integer,
+    weight integer,
+    age integer
+);
+
+CREATE TABLE olympics_medals(
+    athlete_id integer,
+    olympic_id integer,
+    sport text,
+    event text,
+    medal text
 );
