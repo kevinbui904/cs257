@@ -1,11 +1,11 @@
 '''
     Parse athlete_events.csv and noc_region.csv to be loaded into custom PSQL schemas
     src: https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
-    at 21:00 10-11-21
+    at 21:00 10-14-21
 
     "ID","Name","Sex","Age","Height","Weight","Team","NOC","Games","Year","Season","City","Sport","Event","Medal"
     NOC,region,notes
-    Author: Thien K. M. Bui, 10-11-2021
+    Author: Thien K. M. Bui, 10-14-2021
 '''
 
 import csv
@@ -90,24 +90,25 @@ if __name__ == "__main__":
                 skip_noc = False
             else:
                 noc = row[0]
-                region = row[1]
+                region = row[1].replace(',', '')
                 notes = row[2]
 
                 # if the noc doesn't exist here after parsing athlete_events, there's inconsistencies so we need to parse the value of "team" from athlete_events and compare it with "region" from athlete_events.csv
                 if(not unique_noc.get(noc, False)):
                     written = False
-                    for key in unique_noc.keys():
-                        if(unique_noc.get(noc, False) and region in unique_noc[noc]):
+                    for noc_key in unique_noc.keys():
+                        if(unique_noc.get(noc_key, False) and region in unique_noc[noc_key]):
                             written = True
                             # prioritize the NOC spelling in athlete_events
-                            unique_noc[key] = [team, noc_id]
+                            unique_noc[noc_key] = [team, noc_id]
                             noc_team_writer.writerow(
-                                [noc_id, key, unique_noc[key][0], region, notes])
+                                [noc_id, noc_key, unique_noc[noc_key][0], region, notes])
 
                     # we only want to write to csv ONCE per new noc we haven't encountered
                     if(not written):
                         print([noc_id, noc, None, region, notes], "check this")
                         unique_noc[noc] = [region, noc_id]
+
                         noc_team_writer.writerow(
                             [noc_id, noc, None, region, notes])
 
@@ -131,6 +132,7 @@ if __name__ == "__main__":
                 athlete_id = row[0]
                 olympic_id = unique_oylmpic_by_year[row[9]]
                 # unique noc has array inside [team, noc_id]
+                # print(unique_noc[row[7]])
                 noc_id = unique_noc[row[7]][1]
 
                 height = row[4]
@@ -138,11 +140,11 @@ if __name__ == "__main__":
                 age = row[3]
 
                 if(height == "NA"):
-                    height = None
+                    height = 'NULL'
                 if(weight == "NA"):
-                    weight = None
+                    weight = 'NULL'
                 if(age == "NA"):
-                    weight = None
+                    age = 'NULL'
 
                 olympics_athletes_writer.writerow(
                     [athlete_id, olympic_id, noc_id, height, weight, age])
@@ -152,7 +154,7 @@ if __name__ == "__main__":
                 medal = row[14]
 
                 if(medal == "NA"):
-                    medal = None
+                    medal = 'NULL'
 
                 olympics_medals_writer.writerow([
                     athlete_id, olympic_id, sport, event, medal])

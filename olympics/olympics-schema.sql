@@ -5,7 +5,6 @@
 
     Credit: Dani Bottiger for giving useful suggestions for per_olympic_athlete and table_earned tables 
 
- "ID","Name","Sex","Age","Height","Weight","Team","NOC","Games","Year","Season","City","Sport","Event","Medal"
 '''
 
 
@@ -38,7 +37,7 @@ CREATE TABLE olympics_athletes(
     olympic_id integer,
     noc_id integer,
     height integer,
-    weight integer,
+    weight float,
     age integer
 );
 
