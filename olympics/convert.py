@@ -3,9 +3,7 @@
     src: https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
     at 21:00 10-14-21
 
-    "ID","Name","Sex","Age","Height","Weight","Team","NOC","Games","Year","Season","City","Sport","Event","Medal"
-    NOC,region,notes
-    Author: Thien K. M. Bui, 10-14-2021
+    Author: Thien K. M. Bui, 10-19-2021
 '''
 
 import csv

@@ -1,0 +1,36 @@
+NAME
+    python3 olympics.py - print entries from olympics psql database
+
+SYPNOPSIS
+    python3 olympics.py <OPTION> [<SEARCH_STRING>] 
+
+
+DESCRIPTION
+    Print out the database entries that matches the provided OPTION.
+
+    EXAMPLE:
+        % python3 olympics.py -n USA
+        |
+        |
+        |
+    
+
+    NOTE: 
+        This CLI can not handle multiple flags, only provide 1 flag at a time 
+
+    
+    -n, --noc  
+        print all athletes from this NOC, sorted by alphabetical order by last name
+    
+    -m, --medals 
+
+        NOTE: this flag does not take in an argument
+
+        print ALL nocs and the numbers of gold medals they've won, sorted by number of gold medals earned in decreasing order 
+    
+    -h, --help 
+        print this usage statement 
+
+AUTHOR:
+    Written by Thien K. M. Bui 10/19/2021
+        
