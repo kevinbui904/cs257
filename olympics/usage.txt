@@ -31,7 +31,7 @@ DESCRIPTION
     
     -a, --athletes
 
-        NOTE: athletes will be printed in alphabetical order
+        NOTE: athletes will be printed in alphabetical order AND that searches are done based on full names only (e.g. "Michael Phelp" will not bring up any results, for his full name is "Michael Fred Phelp")
 
         print ALL athletes with names that contains the provided argument and the number of gold medals they've won. 
 
