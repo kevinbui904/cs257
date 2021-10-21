@@ -153,3 +153,6 @@ if __name__ == "__main__":
             print("{:<15} {:<30} {:<45} {:10}".format(
                 row[0], row[1], row[2], row[3]))
         print('================================================================================\n\n')
+
+    # because we need to close it
+    connection.close()
