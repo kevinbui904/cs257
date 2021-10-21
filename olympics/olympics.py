@@ -5,7 +5,7 @@
 
     config.py needs to include db's username, password, and database name
 
-    Author: Thien K. M. Bui, 10-19-2021
+    Author: Thien K. M. Bui, 10-21-2021
 '''
 
 
