@@ -22,14 +22,15 @@ def parsed_arguments():
     parser = argparse.ArgumentParser(add_help=False)
 
     parser.add_argument('--noc', '-n')
-    parser.add_argument('--medals', '-m')
+    parser.add_argument('--medals', '-m', action='store_true')
+    parser.add_argument('--athletes', '-a')
 
     parser.add_argument('-h', '--help', action='store_true')
 
     return parser.parse_args()
 
 
-def print_help():
+def open_help():
     file = open('usage.txt', 'r')
     content = file.read()
     print(content)
@@ -44,17 +45,17 @@ if __name__ == "__main__":
     arguments = parsed_arguments()
 
     # no arguments were provided
-    if(not arguments.noc and not arguments.medals and not arguments.help):
+    if not arguments.noc and not arguments.medals and not arguments.help and not arguments.athletes:
         user_input = input(
             "Please provide a valid argument, type \'help\' to see usage.txt: ")
         if(user_input == "help"):
-            print_help()
+            open_help()
             exit()
         else:
             exit()
 
-    if(arguments.help):
-        print_help()
+    if arguments.help:
+        open_help()
         exit()
 
     # connect to databse
@@ -65,14 +66,11 @@ if __name__ == "__main__":
         print(e, "unable to connect to databse --KB")
         exit()
 
-    try:
-        cursor = connection.cursor()
-    except Exception as e:
-        print(e, "unable to instantiate cursor --KB")
-        exit()
+    # cursor to be used for queries
+    cursor = connection.cursor()
 
-    if(arguments.noc):
-        sanitized_search_string = str(arguments.noc).upper()
+    if arguments.noc:
+        formatted_search_string = str(arguments.noc).upper()
 
         noc_query = '''
             SELECT DISTINCT athletes.last_name, athletes.first_name, athletes.full_name, nocs_teams.noc
@@ -82,14 +80,76 @@ if __name__ == "__main__":
             AND nocs_teams.noc LIKE %s
             ORDER by athletes.last_name;
             '''
-        cursor.execute(noc_query, (sanitized_search_string,))
+        try:
+            cursor.execute(noc_query, (formatted_search_string,))
+        except Exception as e:
+            print(e, "noc_query --KB")
+            exit()
+
+        # formatting so output looks nice
         print('===================',
-              'athletes from NOC %s' % (sanitized_search_string), '===================\n\n')
+              'athletes from NOC %s' % (formatted_search_string), '===================\n')
         print("{:<15} {:<20} {:<45} {:<10}".format(
-            "last_name", "first_name", "full_name", "NOC"))
+            "Last name", "First name", "Full name", "NOC"))
         for row in cursor:
             print("{:<15} {:<20} {:<45} {:<10}".format(
                 row[0], row[1], row[2], row[3]))
+        print('================================================================================\n\n')
 
-    elif (arguments.medals):
-        pass
+    if arguments.medals:
+        medals_query = '''
+            SELECT nocs_teams.noc, nocs_teams.team, COUNT(olympics_medals.medal)
+            FROM nocs_teams, olympics_medals, olympics_athletes
+            WHERE (olympics_medals.medal LIKE 'Gold' OR olympics_medals.medal IS NULL)
+            AND olympics_medals.athlete_id = olympics_athletes.athlete_id
+            AND olympics_athletes.noc_id = nocs_teams.id
+            GROUP BY nocs_teams.noc, nocs_teams.team
+            ORDER BY COUNT(olympics_medals.medal) DESC;
+        '''
+
+        try:
+            cursor.execute(medals_query)
+        except Exception as e:
+            print(e, "medals_query --KB")
+            exit()
+
+        # formatting so output looks nice
+        print('===================',
+              'Gold medals earned by each NOC in database', '===================\n')
+        print("{:<15} {:<30} {:<45}".format(
+            "NOC", "Team Name", "Gold medals earned", "NOC"))
+        for row in cursor:
+            print("{:<15} {:<30} {:<45}".format(
+                row[0], row[1], row[2]))
+        print('================================================================================\n\n')
+
+    if arguments.athletes:
+
+        # so that 'louGanis' will return results for athlete "Louganis"
+        formatted_search_string = arguments.athletes.lower()
+
+        athletes_query = '''
+            SELECT athletes.last_name, athletes.first_name, athletes.full_name, COUNT(olympics_medals.medal)
+            FROM olympics_medals, athletes
+            WHERE POSITION(%s IN LOWER(athletes.full_name)) > 0
+            AND athletes.id = olympics_medals.athlete_id
+            AND (olympics_medals.medal LIKE 'Gold' OR olympics_medals.medal IS NULL)
+            GROUP BY athletes.last_name, athletes.first_name, athletes.full_name
+            ORDER BY COUNT(olympics_medals.medal) DESC;
+        '''
+
+        try:
+            cursor.execute(athletes_query, (formatted_search_string,))
+        except Exception as e:
+            print(e, "athletes_query --KB")
+            exit()
+
+        # formatting so output looks nice
+        print('===================',
+              'Gold medals earned by athletes whose names contains %s' % (formatted_search_string), '===================\n')
+        print("{:<15} {:<30} {:<45} {:10}".format(
+            "First name", "Last name", "Full name", "Gold medals earned"))
+        for row in cursor:
+            print("{:<15} {:<30} {:<45} {:10}".format(
+                row[0], row[1], row[2], row[3]))
+        print('================================================================================\n\n')

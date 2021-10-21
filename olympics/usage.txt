@@ -8,19 +8,20 @@ SYPNOPSIS
 DESCRIPTION
     Print out the database entries that matches the provided OPTION.
 
-    EXAMPLE:
-        % python3 olympics.py -n USA
-        |
-        |
-        |
-    
-
     NOTE: 
-        This CLI can not handle multiple flags, only provide 1 flag at a time 
+        If multiple flags are provided, ALL outputs will be printed (e.g. running -n and -m flags at once will print out athletes from noc AND medals earned per noc)
 
+        Print order is predetermined (e.g. using -n followed by -m flag will have the same result as using -m followed by -n flag). Order will always be NOC --> Medals --> Athletes
+
+        The only exception is the -h / --help flag, where it'll simply bring up this usage document  
     
     -n, --noc  
-        print all athletes from this NOC, sorted by alphabetical order by last name
+    
+        NOTE: this option will ONLY search based on NOC's abbreviated name / IOC (e.g. searching for NOC 'Singapore' will return nothing, but searching for 'SGP' will print out a list of athletes)
+
+        NOTE: this option will ONLY research string that fully matches (e.g., you can not search for ALL NOC that contain the character 's')
+
+        print all athletes from provided NOC, sorted by alphabetical order by last name
     
     -m, --medals 
 
@@ -28,9 +29,32 @@ DESCRIPTION
 
         print ALL nocs and the numbers of gold medals they've won, sorted by number of gold medals earned in decreasing order 
     
+    -a, --athletes
+
+        NOTE: athletes will be printed in alphabetical order
+
+        print ALL athletes with names that contains the provided argument and the number of gold medals they've won. 
+
+        
     -h, --help 
         print this usage statement 
 
+    
+    EXAMPLE:
+        % python3 olympics.py -n USA
+        |
+        |
+        |
+        =================== athletes from NOC VIE ===================
+
+        Last name       First name           Full name                                     NOC
+        An              V                    V Thnh An                                     VIE
+        An              V                    V Trn Trng An                                 VIE
+        Anh                                   Th Anh                                       VIE
+        Anh             Dng                  Dng Th Vit Anh                                VIE
+        Anh             Nguyn                Nguyn Ngc Anh                                 VIE
+        ...
+
 AUTHOR:
-    Written by Thien K. M. Bui 10/19/2021
+    Written by Thien K. M. Bui 10/21/2021
         

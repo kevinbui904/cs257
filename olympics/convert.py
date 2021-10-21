@@ -36,7 +36,6 @@ if __name__ == "__main__":
         athlete_file_reader = csv.reader(athlete_events_file)
         # create athletes.csv
 
-        athletes_count = 0
         skip_athlete_events = True
 
         olympics_id = 0
@@ -48,7 +47,6 @@ if __name__ == "__main__":
                 athlete_id = row[0]
                 # only write to athletes.csv if athlete is unique based on data set provided id
                 if(not unique_athlete.get(athlete_id, False)):
-                    athletes_count += 1
                     unique_athlete[athlete_id] = True
 
                     athlete_name = row[1].replace(",", '')
@@ -116,8 +114,6 @@ if __name__ == "__main__":
                         [noc_id, noc, unique_noc[noc][0], region, notes])
 
                 noc_id += 1
-        print(noc_id, " # of noc")
-        print(athletes_count, " # of athletes")
     # parse linking tables olympics_medals and olympics_athletes
     with open('athlete_events.csv') as athlete_events_file:
         skip_athlete_events = True

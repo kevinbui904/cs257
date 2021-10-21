@@ -34,7 +34,7 @@ ORDER by olympics.year;
 -- noc and all gold medals they've won, sorted in decreasing order by number of gold medals won
 SELECT nocs_teams.noc, nocs_teams.team, COUNT(olympics_medals.medal) as "Gold medals earned"
 FROM nocs_teams, olympics_medals, olympics_athletes
-WHERE olympics_medals.medal LIKE 'Gold'
+WHERE (olympics_medals.medal LIKE 'Gold' OR olympics_medals.medal IS NULL)
 AND olympics_medals.athlete_id = olympics_athletes.athlete_id
 AND olympics_athletes.noc_id = nocs_teams.id
 GROUP BY nocs_teams.noc, nocs_teams.team
