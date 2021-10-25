@@ -13,9 +13,7 @@ import flask
 import psycopg2
 
 # import provided credentials
-from config import password
-from config import database
-from config import username
+import config
 
 app = flask.Flask(__name__)
 
@@ -41,7 +39,47 @@ the following fields.
 
 @app.route('/games')
 def get_games():
-    pass
+    # connect to databse
+    try:
+        connection = psycopg2.connect(
+            database=config.database, user=config.username, password=config.password)
+    except Exception as e:
+        print(e, "unable to connect to databse --KB")
+        exit()
+
+    games_list = []
+
+    query = '''
+        SELECT olympics.id, olympics.year, olympics.season, olympics.city
+        FROM olympics
+        ORDER BY olympics.year
+    '''
+
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute(query)
+    except Exception as e:
+        print(e, "games route database error --kb")
+
+    for row in cursor:
+        id = row[0]
+        year = row[1]
+        season = row[2]
+        city = row[3]
+
+        game = {
+            "id": id,
+            "year": year,
+            "season": season,
+            "city": city
+        }
+        games_list.append(game)
+
+    # because we need to close connection EVERYTIME
+    connection.close()
+
+    return json.dumps(games_list)
 
 
 '''
@@ -56,7 +94,43 @@ in this list will have the following fields.
 
 @app.route('/nocs')
 def get_nocs():
-    pass
+    # connect to databse
+    try:
+        connection = psycopg2.connect(
+            database=config.database, user=config.username, password=config.password)
+    except Exception as e:
+        print(e, "unable to connect to databse --KB")
+        exit()
+
+    noc_list = []
+
+    query = '''
+        SELECT nocs_teams.noc, nocs_teams.team
+        FROM nocs_teams
+        ORDER BY nocs_teams.noc
+    '''
+
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute(query)
+    except Exception as e:
+        print(e, "games route database error --kb")
+
+    for row in cursor:
+        abbr = row[0]
+        team = row[1]
+
+        noc = {
+            "noc": abbr,
+            "name": team,
+        }
+        noc_list.append(noc)
+
+    # because we need to close connection EVERYTIME
+    connection.close()
+
+    return json.dumps(noc_list)
 
 
 '''
@@ -74,9 +148,6 @@ games.
 def get_medalists(games_id):
     pass
 
-    # because we need to close it
-    connection.close()
-
 
 if __name__ == '__main__':
 
@@ -88,11 +159,3 @@ if __name__ == '__main__':
     arguments = parser.parse_args()
 
     app.run(host=arguments.host, port=arguments.port, debug=True)
-
-    # connect to databse
-    try:
-        connection = psycopg2.connect(
-            database=database, user=username, password=password)
-    except Exception as e:
-        print(e, "unable to connect to databse --KB")
-        exit()
