@@ -9,19 +9,19 @@
 import csv
 
 if __name__ == "__main__":
-    new_athletes_file = open('./custom-csv/athletes.csv', 'w')
+    new_athletes_file = open('./csv-dump/athletes.csv', 'w')
     athletes_writer = csv.writer(new_athletes_file)
 
-    new_noc_team_file = open('./custom-csv/nocs_teams.csv', 'w')
+    new_noc_team_file = open('./csv-dump/nocs_teams.csv', 'w')
     noc_team_writer = csv.writer(new_noc_team_file)
 
-    new_olympics_file = open('./custom-csv/olympics.csv', 'w')
+    new_olympics_file = open('./csv-dump/olympics.csv', 'w')
     olympics_writer = csv.writer(new_olympics_file)
 
-    new_olympics_athlete_file = open('./custom-csv/olympics_athletes.csv', 'w')
+    new_olympics_athlete_file = open('./csv-dump/olympics_athletes.csv', 'w')
     olympics_athletes_writer = csv.writer(new_olympics_athlete_file)
 
-    new_olympics_medals_file = open('./custom-csv/olympics_medals.csv', 'w')
+    new_olympics_medals_file = open('./csv-dump/olympics_medals.csv', 'w')
     olympics_medals_writer = csv.writer(new_olympics_medals_file)
 
     # used for checking uniqueness
