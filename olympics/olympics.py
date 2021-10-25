@@ -37,10 +37,6 @@ def open_help():
     file.close()
 
 
-def connect_to_db():
-    pass
-
-
 if __name__ == "__main__":
     arguments = parsed_arguments()
 
