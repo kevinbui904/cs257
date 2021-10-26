@@ -69,14 +69,14 @@ if __name__ == "__main__":
                 game = row[8]
 
                 # write out to olympics.csv
-                # check year for uniqueness, there should only be 1 olympic per year
+                # check game for uniqueness, there should only be 1 olympic per year...bad assu
                 if not unique_olympic_game.get(game, False):
 
-                    game = row[8]
+                    year = row[9]
                     season = row[10]
                     city = row[11]
                     olympics_writer.writerow(
-                        [olympics_id, game, season, game, city])
+                        [olympics_id, year, season, game, city])
                     unique_olympic_game[game] = olympics_id
                     olympics_id += 1
 
