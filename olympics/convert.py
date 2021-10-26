@@ -69,8 +69,9 @@ if __name__ == "__main__":
                 game = row[8]
 
                 # write out to olympics.csv
-                # check game for uniqueness, there should only be 1 olympic per year...bad assu
-                if not unique_olympic_game.get(game, False):
+                # check game for uniqueness, there should only be 1 olympic winter and/or summer olympic per year
+                # ...super edge case, apparently unique_olympic_game.get() treats 0 as "there's nothing here"
+                if not unique_olympic_game.get(game, False) and unique_olympic_game.get(game) != 0:
 
                     year = row[9]
                     season = row[10]
