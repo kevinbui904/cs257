@@ -115,7 +115,7 @@ def get_nocs():
     try:
         cursor.execute(query)
     except Exception as e:
-        print(e, "games route database error --kb")
+        print(e, "noc route database error --kb")
 
     for row in cursor:
         abbr = row[0]
@@ -137,16 +137,82 @@ def get_nocs():
 RESPONSE: a JSON list of dictionaries, each representing one athlete
 who earned a medal in the specified games. Each dictionary will have the
 following fields.
-
+   athlete_id -- (INTEGER) a unique identifier for the athlete
+   athlete_name -- (TEXT) the athlete's full name
+   athlete_sex -- (TEXT) the athlete's sex as specified in the database ("F" or "M")
+   sport -- (TEXT) the name of the sport in which the medal was earned
+   event -- (TEXT) the name of the event in which the medal was earned
+   medal -- (TEXT) the type of medal ("gold", "silver", or "bronze")
 If the GET parameter noc=noc_abbreviation is present, this endpoint will return
 only those medalists who were on the specified NOC's team during the specified
 games.
 '''
 
 
-@app.route('/medalists/games/<games_id>?[noc=noc_abbreviation]')
+@app.route('/medalists/games/<games_id>')
 def get_medalists(games_id):
-    pass
+
+    athletes_list = []
+
+    noc = flask.request.args.get('noc')
+
+    if noc is not None:
+        query = '''
+            SELECT DISTINCT athletes.id, athletes.full_name, athletes.sex, olympics_medals.sport, olympics_medals.event, olympics_medals.medal
+            FROM athletes, olympics_medals, olympics_athletes, nocs_teams
+            WHERE olympics_medals.olympic_id = %(games_id)s
+            AND olympics_medals.medal IS NOT NULL
+            AND olympics_medals.athlete_id = olympics_athletes.athlete_id
+            AND olympics_medals.athlete_id = athletes.id
+            AND olympics_athletes.noc_id = nocs_teams.id
+            AND nocs_teams.noc = %(noc)s
+            ORDER BY athletes.id
+        '''
+    else:
+        query = '''
+            SELECT athletes.id, athletes.full_name, athletes.sex, olympics_medals.sport, olympics_medals.event, olympics_medals.medal
+            FROM athletes, olympics_medals
+            WHERE olympics_medals.olympic_id = %(games_id)s
+            AND olympics_medals.medal IS NOT NULL
+            AND olympics_medals.athlete_id = athletes.id
+            ORDER BY athletes.id
+        '''
+    # connect to database
+    try:
+        connection = psycopg2.connect(
+            database=config.database, user=config.username, password=config.password)
+    except Exception as e:
+        print(e, "unable to connect to databse --KB")
+        exit()
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query, {'games_id': games_id, 'noc': noc})
+    except Exception as e:
+        print(e, " medalists route db error --kb")
+
+    for row in cursor:
+        id = row[0]
+        name = row[1]
+        sex = row[2]
+        sport = row[3]
+        event = row[4]
+        medal = row[5]
+
+        athlete = {
+            "id": id,
+            "name": name,
+            "sex": sex,
+            "sport": sport,
+            "event": event,
+            "medal": medal
+        }
+
+        athletes_list.append(athlete)
+
+    # because we need to close connection EVERYTIME
+    connection.close()
+    return json.dumps(athletes_list)
 
 
 if __name__ == '__main__':
