@@ -4,6 +4,8 @@
     at 21:00 10-14-21
 
     Author: Thien K. M. Bui, 10-19-2021
+
+    Updated Oct 25 2021
 '''
 
 import csv
@@ -27,7 +29,7 @@ if __name__ == "__main__":
     # used for checking uniqueness
     unique_athlete = {}
     unique_noc = {}
-    unique_oylmpic_by_year = {}
+    unique_olympic_game = {}
     # NOC used to match
 
     with open('athlete_events.csv') as athlete_events_file, open('noc_regions.csv') as noc_region_file:
@@ -64,18 +66,18 @@ if __name__ == "__main__":
                 if(not unique_noc.get(noc, False)):
                     unique_noc[noc] = [team]
 
-                year = row[9]
+                game = row[8]
 
                 # write out to olympics.csv
                 # check year for uniqueness, there should only be 1 olympic per year
-                if(not unique_oylmpic_by_year.get(year, False)):
+                if not unique_olympic_game.get(game, False):
 
                     game = row[8]
                     season = row[10]
                     city = row[11]
                     olympics_writer.writerow(
-                        [olympics_id, year, season, game, city])
-                    unique_oylmpic_by_year[year] = olympics_id
+                        [olympics_id, game, season, game, city])
+                    unique_olympic_game[game] = olympics_id
                     olympics_id += 1
 
         # write out to noc_regions.csv
@@ -124,7 +126,7 @@ if __name__ == "__main__":
             else:
 
                 athlete_id = row[0]
-                olympic_id = unique_oylmpic_by_year[row[9]]
+                olympic_id = unique_olympic_game[row[8]]
                 # unique noc has array inside [team, noc_id]
                 # print(unique_noc[row[7]])
                 noc_id = unique_noc[row[7]][1]
