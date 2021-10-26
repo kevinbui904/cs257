@@ -1,11 +1,11 @@
-'''
-    Simple Schemas for Olympic dataset taken from https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
+-- '''
+--     Simple Schemas for Olympic dataset taken from https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
 
-    Author: Thien K. M. Bui 10-11-21
+--     Author: Thien K. M. Bui 10-11-21
 
-    Credit: Dani Bottiger for giving useful suggestions for per_olympic_athlete and table_earned tables 
+--     Credit: Dani Bottiger for giving useful suggestions for per_olympic_athlete and table_earned tables 
 
-'''
+-- '''
 
 
 CREATE TABLE athletes (
