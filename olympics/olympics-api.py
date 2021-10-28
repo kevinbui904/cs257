@@ -1,7 +1,7 @@
 '''
     olympics-api.py 
     Kevin Bui, 24 October 2021
-    Updated 24 October 2021
+    Updated 28 October 2021
 
     HTML-based API implementation of olympics.sql database using Flask
 '''
@@ -122,7 +122,7 @@ def get_nocs():
         team = row[1]
 
         noc = {
-            "noc": abbr,
+            "abbreviation": abbr,
             "name": team,
         }
         noc_list.append(noc)
@@ -200,9 +200,9 @@ def get_medalists(games_id):
         medal = row[5]
 
         athlete = {
-            "id": id,
-            "name": name,
-            "sex": sex,
+            "athlete_id": id,
+            "athlete_name": name,
+            "athlete_sex": sex,
             "sport": sport,
             "event": event,
             "medal": medal
