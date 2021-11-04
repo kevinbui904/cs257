@@ -24,8 +24,9 @@ h2.togglable {
 div.search-bar {
 	display: flex;
 	flex-direction: column;
+	/* background-color: lightgreen; */
 	width: 800px;
-	height: 100px;
+	/* height: 100px; */
 }
 input.search-bar {
 	background-color: rgb(211, 211, 211);
@@ -69,8 +70,56 @@ input.search-bar {
 #content-title {
 	font-size: 1.25em;
 }
-#content-subheading {
+.content-subheading {
 	font-size: 1em;
 	margin-left: 2em;
 	padding-right: 0.25em;
+}
+
+#togglable {
+	align-self: flex-end;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-decoration: underline;
+}
+
+#togglable:hover {
+	cursor: pointer;
+}
+
+#advanced-container {
+	align-self: center;
+	width: 90%;
+	height: 250px;
+	background-color: rgb(213, 213, 213);
+	display: flex;
+	flex-direction: column;
+	align-items: space-between;
+	justify-content: space-between;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border: 2px solid black;
+}
+
+.form-input {
+	margin-left: 10px;
+	display: flex;
+}
+
+.uniform-label {
+	display: block;
+	width: 6em;
+	/* background-color: red; */
+}
+#form-submit {
+	width: 20%;
+	height: 2.5em;
+	text-align: start;
+	font-size: medium;
+	align-self: flex-end;
+	margin-right: 20px;
+}
+
+#form-submit:hover {
+	cursor: pointer;
 }
