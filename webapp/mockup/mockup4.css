@@ -1,7 +1,7 @@
 /*
-mockup3.css
+mockup4.css
 Written by Thien K. M. Bui and Robbie Young  
-Last edited Nov 03, 2021
+Last edited Nov 04, 2021
 */
 
 #container {
@@ -28,6 +28,13 @@ div.search-bar {
 	width: 800px;
 	/* height: 100px; */
 }
+
+#main-search {
+	display: flex;
+	width: 800px;
+	/* background-color: red; */
+}
+
 input.search-bar {
 	background-color: rgb(211, 211, 211);
 	width: 100%;
@@ -39,13 +46,22 @@ input.search-bar {
 .togglable {
 	align-self: flex-end;
 }
-
+#contents-wrapper {
+	width: 80%;
+	/* background-color: lightgreen; */
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: 50px;
+}
 #contents-container {
-	width: 35%;
-	min-width: calc(var(--container-min-width) * 0.7);
+	width: 20%;
+	min-width: calc(var(--container-min-width) * 0.5);
 	/* background-color: maroon; */
 	display: flex;
 	flex-direction: column;
+	padding-left: 30px;
+	margin-left: 40px;
+	margin-top: 20px;
 }
 #contents-header {
 	width: 100%;
@@ -68,12 +84,17 @@ input.search-bar {
 }
 
 #content-title {
-	font-size: 1.25em;
+	font-size: 1em;
 }
 .content-subheading {
-	font-size: 1em;
-	margin-left: 2em;
-	padding-right: 0.25em;
+	font-size: 0.75em;
+	margin-left: 1.75em;
+	padding-right: 1em;
+}
+
+.content-sypnopsis {
+	font-size: 0.75em;
+	padding-right: 1em;
 }
 
 #togglable {
@@ -122,4 +143,21 @@ input.search-bar {
 
 #form-submit:hover {
 	cursor: pointer;
+}
+
+#repopulate-container {
+	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	/* background-color: red; */
+}
+
+#pick-for-me {
+	border: 2px solid black;
+	padding: 3px 3px 3px 3px;
+}
+
+#pick-for-me:hover {
+	cursor: pointer;
+	background-color: rgb(211, 211, 211);
 }

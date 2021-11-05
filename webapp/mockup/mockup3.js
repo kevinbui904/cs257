@@ -24,7 +24,6 @@ const toggle = (element) => {
 //Event listener
 const initialize = () => {
 	const togglable = document.getElementById("togglable");
-	console.log(togglable, "check this");
 	const elementToToggle = document.getElementById("advanced-container");
 
 	togglable.addEventListener(
