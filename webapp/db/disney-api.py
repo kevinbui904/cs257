@@ -45,6 +45,10 @@ def create_list(cursor):
     
     return content_list
 
+@app.route('/')
+def hello():
+    return 'Hello there'
+
 @app.route('/recommended')
 def genre():
     connection = connect(config_database, config_user, config_password)
