@@ -1,4 +1,4 @@
-CREATE TABLE entry(
+CREATE TABLE super_table(
     id SERIAL,
     type_id INT,
     title TEXT,
@@ -7,7 +7,7 @@ CREATE TABLE entry(
     countries_id INT,
     date_added_id INT,
     release_year INT,
-    rating_id TEXT,
+    rating_id INT,
     duration TEXT,
     genres_id INT,
     description TEXT
@@ -28,7 +28,7 @@ CREATE TABLE date_added(
     date_added TEXT
 );
 
-CREATE TABLE ratings(
+CREATE TABLE rating(
     id SERIAL,
     rating TEXT
 );
