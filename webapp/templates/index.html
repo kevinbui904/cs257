@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}" ></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}" ></script> -->
     <script type="text/javascript" src="{{ url_for('static', filename='getContents.js') }}" ></script>
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" /> -->
     <title>Isitondisneyplus.com</title>
@@ -83,7 +83,7 @@
             </div>
     </div> -->
     <h1>
-        CS 250: Software Design Carleton College Fall '21
+        CS 251: Software Design Carleton College Fall '21
     </h1>
     <h2>
         Front end for end-to-end assignment
@@ -92,6 +92,16 @@
     <button type="submit" id="recommend-button">
         Random recommendation!
     </button>
+      <!-- select based on presets, wrap in div to break out of flex direction-->
+    <label for="genre">Genre:</label>
+    <select name="sort-by" id="genre-select">
+        <option value="action">Action</option>
+        <option value="comedy">Comedy</option>
+        <option value="documentary">Documentary</option>
+        <option value="mystery">Mystery</option>
+        <option value="science fiction">Science Fiction</option>
+        
+    </select>
 
     <form>
         <label>title
@@ -108,6 +118,7 @@
         <button id="by-director-button">
             search by directors
         </button>
+
     </form>
     <form>
         <label>cast
@@ -116,6 +127,7 @@
         <button id='by-cast-button'>
             search by cast 
         </button>
+
     </form>
     <div id="recommended-container" style="background-color:lightgoldenrodyellow">
 

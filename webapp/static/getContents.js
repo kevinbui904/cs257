@@ -6,91 +6,6 @@ Updated 08 November 2021
 Helper methods to fetch data from our api.py
 */
 
-//------------REMOVE BEFORE SUBMISSION -----
-
-const recommendedContent = {
-	type: "Movie",
-	title: "A Spark Story",
-	directors: "Jason Sterman, Leanne Dare",
-	casts: "Apthon Corbin, Louis Gonzales",
-	date_added: "September 24, 2021",
-	release_year: "2021",
-	rating: "TV-PG",
-	duration: "88 min",
-	listed_in: "Documentary",
-	description:
-		"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-};
-
-const contents = [
-	{
-		type: "Movie",
-		title: "A Spark Story",
-		directors: "Jason Sterman, Leanne Dare",
-		casts: "Apthon Corbin, Louis Gonzales",
-		date_added: "September 24, 2021",
-		release_year: "2021",
-		rating: "TV-PG",
-		duration: "88 min",
-		listed_in: "Documentary",
-		description:
-			"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-	},
-	{
-		type: "Movie",
-		title: "A Spark Story",
-		directors: "Jason Sterman, Leanne Dare",
-		casts: "Apthon Corbin, Louis Gonzales",
-		date_added: "September 24, 2021",
-		release_year: "2021",
-		rating: "TV-PG",
-		duration: "88 min",
-		listed_in: "Documentary",
-		description:
-			"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-	},
-	{
-		type: "Movie",
-		title: "A Spark Story",
-		directors: "Jason Sterman, Leanne Dare",
-		casts: "Apthon Corbin, Louis Gonzales",
-		date_added: "September 24, 2021",
-		release_year: "2021",
-		rating: "TV-PG",
-		duration: "88 min",
-		listed_in: "Documentary",
-		description:
-			"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-	},
-	{
-		type: "Movie",
-		title: "A Spark Story",
-		directors: "Jason Sterman, Leanne Dare",
-		casts: "Apthon Corbin, Louis Gonzales",
-		date_added: "September 24, 2021",
-		release_year: "2021",
-		rating: "TV-PG",
-		duration: "88 min",
-		listed_in: "Documentary",
-		description:
-			"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-	},
-	{
-		type: "Movie",
-		title: "A Spark Story",
-		directors: "Jason Sterman, Leanne Dare",
-		casts: "Apthon Corbin, Louis Gonzales",
-		date_added: "September 24, 2021",
-		release_year: "2021",
-		rating: "TV-PG",
-		duration: "88 min",
-		listed_in: "Documentary",
-		description:
-			"Two Pixar filmmakers strive to bring their uniquely personal SparkShorts visions to the screen.",
-	},
-];
-//-----------------------------------------------
-
 const getAPIBaseUrl = () => {
 	const baseUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`;
 
@@ -104,8 +19,9 @@ const initGetRecommended = () => {
 };
 
 const onRecommendButtonClicked = () => {
-	const url = getAPIBaseUrl() + "/recommended";
-
+	const genre = document.getElementById("genre-select");
+	const genreString = genre.value;
+	const url = `${getAPIBaseUrl()}/recommended?genre=${genreString}`;
 	// send GET request to specified URL
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
@@ -113,12 +29,12 @@ const onRecommendButtonClicked = () => {
 			let contentHTML = "";
 			//internal agreement, API will ONLY ever return 1 object in a list of size 1
 			const content = jsonResponse[0];
-			console.log(content, typeof content, content.title, "check this");
 			contentHTML = `
-                <div id="contents-container">
+                <div id="content-container">
                     <div class="content">
                         <div id="content-title">
-                            ${content.title}
+                            <strong>${content.title}</strong>
+							(${content.type})
                         </div>
                         <div class="content-subheading">
                             <strong>Director(s):</strong> ${content.directors}
@@ -126,6 +42,9 @@ const onRecommendButtonClicked = () => {
                         <div class="content-subheading">
                             <strong>Cast(s):</strong> ${content.cast}
                         </div>
+						<div class="content-subheading">
+							<strong>Genre(s):</strong> ${content.listed_in}
+						</div>
                         <div class="content-sypnopsis">
                             <strong>Sypnopsis:</strong>
                             ${content.description}
@@ -155,24 +74,26 @@ const onTitleButtonClicked = (e) => {
 	//making sure that input isn't blank
 	if (titleInput && titleString) {
 		const url = getAPIBaseUrl() + `/titles/${titleString}`;
-		console.log(url, "check this");
 		// send GET request to specified URL
 		fetch(url, { method: "GET" })
 			.then((response) => response.json())
 			.then((jsonContent) => {
-				console.log(jsonContent, "check this");
 				const formattedContents = jsonContent.map((content) => {
 					return `
-					<div id="contents-container">
+					<div id="content-container">
 						<div class="content">
 							<div id="content-title">
-								${content.title}
+								<strong>${content.title}</strong>
+								(${content.type})
 							</div>
 							<div class="content-subheading">
 								<strong>Director(s):</strong> ${content.directors}
 							</div>
 							<div class="content-subheading">
 								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.listed_in}
 							</div>
 							<div class="content-sypnopsis">
 								<strong>Sypnopsis:</strong>
@@ -211,16 +132,20 @@ const onDirectorButtonClicked = (e) => {
 			.then((jsonContent) => {
 				const formattedContents = jsonContent.map((content) => {
 					return `
-					<div id="contents-container">
+					<div id="content-container">
 						<div class="content">
 							<div id="content-title">
-								${content.title}
+								<strong>${content.title}</strong>
+								(${content.type})
 							</div>
 							<div class="content-subheading">
 								<strong>Director(s):</strong> ${content.directors}
 							</div>
 							<div class="content-subheading">
 								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.listed_in}
 							</div>
 							<div class="content-sypnopsis">
 								<strong>Sypnopsis:</strong>
@@ -259,16 +184,20 @@ const onCastButtonClicked = (e) => {
 			.then((jsonContent) => {
 				const formattedContents = jsonContent.map((content) => {
 					return `
-					<div id="contents-container">
+					<div id="content-container">
 						<div class="content">
 							<div id="content-title">
-								${content.title}
+								<strong>${content.title}</strong>
+								(${content.type})
 							</div>
 							<div class="content-subheading">
 								<strong>Director(s):</strong> ${content.directors}
 							</div>
 							<div class="content-subheading">
 								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.listed_in}
 							</div>
 							<div class="content-sypnopsis">
 								<strong>Sypnopsis:</strong>

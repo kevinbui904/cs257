@@ -57,6 +57,8 @@ def hello():
 def genre():
     connection = connect(config_database, config_user, config_password)
     genre = flask.request.args.get('genre')
+
+    genre_formatted = "%" + genre + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -67,15 +69,12 @@ def genre():
 
     try:
         cursor = connection.cursor()
-        if genre is not None:
-            query = query + ''' AND genres.genres LIKE %s
-                        ORDER BY RANDOM()
-                        LIMIT 1;'''
-            cursor.execute(query, (genre, ))
-        else:
-            query = query + ''' ORDER BY RANDOM()
-                        LIMIT 1;'''
-            cursor.execute(query)
+
+        query = query + ''' AND LOWER(genres.genres) LIKE LOWER(%s)
+                    ORDER BY RANDOM()
+                    LIMIT 1;'''
+        cursor.execute(query, (genre_formatted, ))
+
     except Exception as e:
         connection.close()
         print(e)
@@ -85,14 +84,13 @@ def genre():
     connection.close()
     return json.dumps(content_list)
 
-# * for genre, to keep the scope of this project simple, the only genre they could select from is "action", "comedy", "horror", "documentary", "sci-fi"
+# * for genre, to keep the scope of this project simple, the only genre they could select from is "action", "comedy", "documentary", "sci-fi"
 
 
 @api.route('/directors/<directors_name>')
 def director(directors_name):
     connection = connect(config_database, config_user, config_password)
     director_formatted = "%" + directors_name + "%"
-    sort_by = flask.request.args.get('sort_by')
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -100,17 +98,15 @@ def director(directors_name):
                 AND super_table.genres_id = genres.id
                 AND super_table.rating_id = rating.id
                 AND super_table.type_id = type.id
-                AND LOWER(super_table.director) LIKE LOWER(%(directors_name)s)'''
+                AND LOWER(super_table.director) LIKE LOWER(%(directors_name)s)
+                ORDER BY title;
+                '''
 
     try:
         cursor = connection.cursor()
-        if sort_by is not None:
-            query = query + ''' ORDER BY %(sort_by)s;'''
-            cursor.execute(
-                query, {'directors_name': director_formatted, 'sort_by': sort_by})
-        else:
-            query = query + ''' ORDER BY title;'''
-            cursor.execute(query, {'directors_name': director_formatted})
+        cursor.execute(
+            query, {'directors_name': director_formatted})
+
     except Exception as e:
         connection.close()
         print(e)
@@ -125,10 +121,7 @@ def director(directors_name):
 @api.route('/titles/<titles_string>')
 def titles(titles_string):
     connection = connect(config_database, config_user, config_password)
-    sort_by = flask.request.args.get('sort_by')
-
     title_formatted = "%" + titles_string + "%"
-
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -136,17 +129,15 @@ def titles(titles_string):
                 AND super_table.genres_id = genres.id
                 AND super_table.rating_id = rating.id
                 AND super_table.type_id = type.id
-                AND LOWER(super_table.title) LIKE LOWER(%(title)s)'''
+                AND LOWER(super_table.title) LIKE LOWER(%(title)s)
+                ORDER BY title;
+                '''
 
     try:
         cursor = connection.cursor()
-        if sort_by is not None:
-            query = query + ''' ORDER BY %(sort_by)s;'''
-            cursor.execute(
-                query, {'title': title_formatted, 'sort_by': sort_by})
-        else:
-            query = query + ''' ORDER BY title;'''
-            cursor.execute(query, {'title': title_formatted})
+        cursor.execute(
+            query, {'title': title_formatted})
+
     except Exception as e:
         connection.close()
         print(e)
@@ -160,7 +151,6 @@ def titles(titles_string):
 @api.route('/cast/<cast_name>')
 def cast(cast_name):
     connection = connect(config_database, config_user, config_password)
-    sort_by = flask.request.args.get('sort_by')
     cast_formatted = "%" + cast_name + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
@@ -169,17 +159,13 @@ def cast(cast_name):
                 AND super_table.genres_id = genres.id
                 AND super_table.rating_id = rating.id
                 AND super_table.type_id = type.id
-                AND LOWER(super_table.actors) LIKE LOWER(%(cast_name)s)'''
+                AND LOWER(super_table.actors) LIKE LOWER(%(cast_name)s)
+                ORDER BY title;
+                '''
 
     try:
         cursor = connection.cursor()
-        if sort_by is not None:
-            query = query + ''' ORDER BY %(sort_by)s;'''
-            cursor.execute(
-                query, {'cast_name': cast_formatted, 'sort_by': sort_by})
-        else:
-            query = query + ''' ORDER BY title;'''
-            cursor.execute(query, {'cast_name': cast_formatted})
+        cursor.execute(query, {'cast_name': cast_formatted})
     except Exception as e:
         connection.close()
         print(e)
