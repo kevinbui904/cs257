@@ -104,42 +104,40 @@ const initGetRecommended = () => {
 };
 
 const onRecommendButtonClicked = () => {
-	const url = getAPIBaseUrl() + "/recommend";
-	//send GET request to specified URL
-	// fetch(url , {method: 'GET'})
-	//     .then(response => response.json())
-	//     .then(recommendedContent => {
-	let newContent = `
+	const url = getAPIBaseUrl() + "/recommended";
+
+	// send GET request to specified URL
+	fetch(url, { method: "GET" })
+		.then((response) => response.json())
+		.then((jsonResponse) => {
+			let contentHTML = "";
+			//internal agreement, API will ONLY ever return 1 object in a list of size 1
+			const content = jsonResponse[0];
+			console.log(content, typeof content, content.title, "check this");
+			contentHTML = `
                 <div id="contents-container">
                     <div class="content">
                         <div id="content-title">
-                            ${recommendedContent.title}
+                            ${content.title}
                         </div>
                         <div class="content-subheading">
-                            <strong>Director(s):</strong> ${recommendedContent.directors}
+                            <strong>Director(s):</strong> ${content.directors}
                         </div>
                         <div class="content-subheading">
-                            <strong>Cast(s):</strong> ${recommendedContent.casts}
+                            <strong>Cast(s):</strong> ${content.cast}
                         </div>
                         <div class="content-sypnopsis">
                             <strong>Sypnopsis:</strong>
-                            ${recommendedContent.description}
+                            ${content.description}
                         </div>
                     </div>
                 </div> 
             `;
-	// })
-	const recommendedContainer = document.getElementById("recommended-container");
-
-	if (recommendedContainer && recommendedContainer.children.length === 0) {
-		recommendedContainer.innerHTML = newContent;
-	} else if (
-		recommendedContainer &&
-		recommendedContainer.children.length !== 0
-	) {
-		console.log(recommendedContainer.childNodes, "check this");
-		recommendedContainer.innerHTML = "";
-	}
+			const recommendedContainer = document.getElementById(
+				"recommended-container"
+			);
+			recommendedContainer.innerHTML = contentHTML;
+		});
 };
 
 //------------------------- by title handler
@@ -153,43 +151,40 @@ const onTitleButtonClicked = (e) => {
 
 	const titleInput = document.getElementById("by-title-input");
 
+	const titleString = titleInput.value;
 	//making sure that input isn't blank
-	if (titleInput && titleInput.value) {
-		const url = getAPIBaseUrl() + "/recommend";
-		//send GET request to specified URL
-		// fetch(url , {method: 'GET'})
-		//     .then(response => response.json())
-		//     .then(recommendedContent => {
-		const formattedContents = contents.map((content) => {
-			return `
-			<div id="contents-container">
-				<div class="content">
-					<div id="content-title">
-						${content.title}
-					</div>
-					<div class="content-subheading">
-						<strong>Director(s):</strong> ${content.directors}
-					</div>
-					<div class="content-subheading">
-						<strong>Cast(s):</strong> ${content.casts}
-					</div>
-					<div class="content-sypnopsis">
-						<strong>Sypnopsis:</strong>
-						${content.description}
-					</div>
-				</div>
-			</div> 
-		`;
-		});
-		// })
-		const contentsContainer = document.getElementById("contents-container");
-		//------------------REMOVE BEFORE SUBMISSION---------------
-		if (contentsContainer && contentsContainer.children.length !== 0) {
-			contentsContainer.innerHTML = "";
-		} else if (contentsContainer && contentsContainer.children.length === 0) {
-			contentsContainer.innerHTML = formattedContents;
-		}
-		//----------------------------------------------------------------------
+	if (titleInput && titleString) {
+		const url = getAPIBaseUrl() + `/titles/${titleString}`;
+		console.log(url, "check this");
+		// send GET request to specified URL
+		fetch(url, { method: "GET" })
+			.then((response) => response.json())
+			.then((jsonContent) => {
+				console.log(jsonContent, "check this");
+				const formattedContents = jsonContent.map((content) => {
+					return `
+					<div id="contents-container">
+						<div class="content">
+							<div id="content-title">
+								${content.title}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
+						</div>
+					</div> 
+				`;
+				});
+				const contentsContainer = document.getElementById("contents-container");
+				contentsContainer.innerHTML = formattedContents;
+			});
 	} else {
 		window.alert("required field can not be null");
 	}
@@ -206,43 +201,38 @@ const onDirectorButtonClicked = (e) => {
 
 	const directorInput = document.getElementById("by-director-input");
 
+	const directorString = directorInput.value;
 	//making sure that input isn't blank
-	if (directorInput && directorInput.value) {
-		const url = getAPIBaseUrl() + "/recommend";
-		//send GET request to specified URL
-		// fetch(url , {method: 'GET'})
-		//     .then(response => response.json())
-		//     .then(recommendedContent => {
-		const formattedContents = contents.map((content) => {
-			return `
-			<div id="contents-container">
-				<div class="content">
-					<div id="content-title">
-						${content.title}
-					</div>
-					<div class="content-subheading">
-						<strong>Director(s):</strong> ${content.directors}
-					</div>
-					<div class="content-subheading">
-						<strong>Cast(s):</strong> ${content.casts}
-					</div>
-					<div class="content-sypnopsis">
-						<strong>Sypnopsis:</strong>
-						${content.description}
-					</div>
-				</div>
-			</div> 
-		`;
-		});
-		// })
-		const contentsContainer = document.getElementById("contents-container");
-		//------------------REMOVE BEFORE SUBMISSION---------------
-		if (contentsContainer && contentsContainer.children.length !== 0) {
-			contentsContainer.innerHTML = "";
-		} else if (contentsContainer && contentsContainer.children.length === 0) {
-			contentsContainer.innerHTML = formattedContents;
-		}
-		//----------------------------------------------------------------------
+	if (directorInput && directorString) {
+		const url = getAPIBaseUrl() + `/directors/${directorString}`;
+		// send GET request to specified URL
+		fetch(url, { method: "GET" })
+			.then((response) => response.json())
+			.then((jsonContent) => {
+				const formattedContents = jsonContent.map((content) => {
+					return `
+					<div id="contents-container">
+						<div class="content">
+							<div id="content-title">
+								${content.title}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
+						</div>
+					</div> 
+				`;
+				});
+				const contentsContainer = document.getElementById("contents-container");
+				contentsContainer.innerHTML = formattedContents;
+			});
 	} else {
 		window.alert("required field can not be null");
 	}
@@ -256,47 +246,41 @@ const initGetByCast = () => {
 
 const onCastButtonClicked = (e) => {
 	e.preventDefault();
-	const url = getAPIBaseUrl() + "/recommend";
 
 	const castInput = document.getElementById("by-cast-input");
 
+	const castString = castInput.value;
 	//making sure that input isn't blank
-	if (castInput && castInput.value) {
-		const url = getAPIBaseUrl() + "/recommend";
-		//send GET request to specified URL
-		// fetch(url , {method: 'GET'})
-		//     .then(response => response.json())
-		//     .then(recommendedContent => {
-		const formattedContents = contents.map((content) => {
-			return `
-			<div id="contents-container">
-				<div class="content">
-					<div id="content-title">
-						${content.title}
-					</div>
-					<div class="content-subheading">
-						<strong>Director(s):</strong> ${content.directors}
-					</div>
-					<div class="content-subheading">
-						<strong>Cast(s):</strong> ${content.casts}
-					</div>
-					<div class="content-sypnopsis">
-						<strong>Sypnopsis:</strong>
-						${content.description}
-					</div>
-				</div>
-			</div> 
-		`;
-		});
-		// })
-		const contentsContainer = document.getElementById("contents-container");
-		//------------------REMOVE BEFORE SUBMISSION---------------
-		if (contentsContainer && contentsContainer.children.length !== 0) {
-			contentsContainer.innerHTML = "";
-		} else if (contentsContainer && contentsContainer.children.length === 0) {
-			contentsContainer.innerHTML = formattedContents;
-		}
-		//----------------------------------------------------------------------
+	if (castInput && castString) {
+		const url = getAPIBaseUrl() + `/cast/${castString}`;
+		// send GET request to specified URL
+		fetch(url, { method: "GET" })
+			.then((response) => response.json())
+			.then((jsonContent) => {
+				const formattedContents = jsonContent.map((content) => {
+					return `
+					<div id="contents-container">
+						<div class="content">
+							<div id="content-title">
+								${content.title}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
+						</div>
+					</div> 
+				`;
+				});
+				const contentsContainer = document.getElementById("contents-container");
+				contentsContainer.innerHTML = formattedContents;
+			});
 	} else {
 		window.alert("required field can not be null");
 	}
