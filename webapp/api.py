@@ -1,7 +1,6 @@
 '''
-    disney-api.py
+    api.py
     Authors: Kevin Bui, Robbie Young, November 11 2021
-    * add desc of doc
     For use in the final project in Carleton College's CS 257 Software Design Class, Fall 2021
 '''
 
@@ -84,8 +83,6 @@ def genre():
     connection.close()
     return json.dumps(content_list)
 
-# * for genre, to keep the scope of this project simple, the only genre they could select from is "action", "comedy", "documentary", "sci-fi"
-
 
 @api.route('/directors/<directors_name>')
 def director(directors_name):
@@ -115,7 +112,6 @@ def director(directors_name):
     content_list = create_list(cursor)
     connection.close()
     return json.dumps(content_list)
-# * let's restrict searches ONLY to 1 author at a time
 
 
 @api.route('/titles/<titles_string>')
@@ -174,7 +170,6 @@ def cast(cast_name):
     content_list = create_list(cursor)
     connection.close()
     return json.dumps(content_list)
-# * let's restrict searches ONLY to 1 cast at a time
 
 
 def main():

@@ -1,9 +1,10 @@
 '''
 app.py 
-Thien K. M. Bui, Robbie Young 08 November 2021
-Updated 08 November, 2021
+Thien K. M. Bui, Robbie Young 
+Updated 11 November, 2021
 
 Flask application to serve disneyplus data from api.py
+For use in Carleton CS 251 Fall 2021
 '''
 
 

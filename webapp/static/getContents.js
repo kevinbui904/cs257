@@ -1,9 +1,10 @@
 /*getContents.js 
 Thien K. M. Bui and Robbie Young 08 November 2021
-Updated 08 November 2021
+Updated 11 November 2021
 
 
 Helper methods to fetch data from our api.py
+For use in Carleton CS 251 Fall 2021
 */
 
 const getAPIBaseUrl = () => {

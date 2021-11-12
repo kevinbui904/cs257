@@ -1,7 +1,8 @@
 /* toggle.js 
-Thien K. M. Bui, Robbie Young, 3 Nov 2021
+Thien K. M. Bui, Robbie Young, 11 Nov 2021
 
 Toggle element script
+For use in Carleton CS 251 Fall 2021
 */
 
 const show = (element) => {
