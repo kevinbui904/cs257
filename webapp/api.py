@@ -16,7 +16,6 @@ from config import password as config_password
 
 api = flask.Blueprint('api', __name__)
 
-
 def connect(connect_database, connect_user, connect_password):
     try:
         connection = psycopg2.connect(
@@ -34,13 +33,13 @@ def create_list(cursor):
         this_dict = {}
         this_dict['type'] = this_content[0]
         this_dict['title'] = this_content[1]
-        this_dict['directors'] = this_content[2]
+        this_dict['directors'] = this_content[2] # ***
         this_dict['cast'] = this_content[3]
         this_dict['date_added'] = this_content[4]
         this_dict['release_year'] = this_content[5]
         this_dict['rating'] = this_content[6]
         this_dict['duration'] = this_content[7]
-        this_dict['listed_in'] = this_content[8]
+        this_dict['genres'] = this_content[8] # *** genres
         this_dict['description'] = this_content[9]
         content_list.append(this_dict)
 
@@ -52,12 +51,16 @@ def hello():
     return 'Isitondisney.com'
 
 
-@api.route('/recommended')
-def genre():
-    connection = connect(config_database, config_user, config_password)
-    genre = flask.request.args.get('genre')
+@api.route('/help')
+def help():
+    with open('readme.txt') as readme:
+        return readme.read()
 
-    genre_formatted = "%" + genre + "%"
+
+@api.route('/recommended')
+def genres():
+    connection = connect(config_database, config_user, config_password)
+    genres = "%" + flask.request.args.get('genres') + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -68,12 +71,10 @@ def genre():
 
     try:
         cursor = connection.cursor()
-
         query = query + ''' AND LOWER(genres.genres) LIKE LOWER(%s)
                     ORDER BY RANDOM()
                     LIMIT 1;'''
-        cursor.execute(query, (genre_formatted, ))
-
+        cursor.execute(query, (genres, ))
     except Exception as e:
         connection.close()
         print(e)
@@ -87,7 +88,7 @@ def genre():
 @api.route('/directors/<directors_name>')
 def director(directors_name):
     connection = connect(config_database, config_user, config_password)
-    director_formatted = "%" + directors_name + "%"
+    director = "%" + directors_name + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -102,8 +103,7 @@ def director(directors_name):
     try:
         cursor = connection.cursor()
         cursor.execute(
-            query, {'directors_name': director_formatted})
-
+            query, {'directors_name': director})
     except Exception as e:
         connection.close()
         print(e)
@@ -115,9 +115,9 @@ def director(directors_name):
 
 
 @api.route('/titles/<titles_string>')
-def titles(titles_string):
+def titles(title_string):
     connection = connect(config_database, config_user, config_password)
-    title_formatted = "%" + titles_string + "%"
+    title_formatted = "%" + titles_string+ "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -133,7 +133,6 @@ def titles(titles_string):
         cursor = connection.cursor()
         cursor.execute(
             query, {'title': title_formatted})
-
     except Exception as e:
         connection.close()
         print(e)
