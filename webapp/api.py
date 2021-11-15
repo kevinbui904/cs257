@@ -54,7 +54,7 @@ def hello():
 @api.route('/help')
 def help():
     with open('readme.txt') as readme:
-        return readme.read()
+        return flask.Response(readme.read(), mimetype = 'text/plain')
 
 
 @api.route('/recommended')
