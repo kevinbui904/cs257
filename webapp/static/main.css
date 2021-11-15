@@ -1,7 +1,7 @@
 /*
 main.css
 Written by Thien K. M. Bui and Robbie Young  
-Last edited Nov 04, 2021
+Last edited Nov 15, 2021
 */
 
 #container {
@@ -17,30 +17,36 @@ h1 {
 	font-size: 4em;
 }
 
-h2.togglable {
-	font-size: x-large;
-}
-
-div.search-bar {
-	display: flex;
-	flex-direction: column;
-	/* background-color: lightgreen; */
-	width: 800px;
-	/* height: 100px; */
-}
 #search-container {
 	display: flex;
+	/* flex-direction: column; */
+	align-items: center;
+	/* background-color: lightgreen; */
+	width: 800px;
 }
-#search-icon {
+
+select#search-by {
+	height: 55px;
+	/* width: 80px; */
+	font-size: 1.15em;
+	border: 2px solid black;
+	margin-right: 5px;
+
+	/* background-color: red; */
+}
+
+/* control on click animation */
+/* select#search-by:active {
 	background-color: red;
-}
+} */
+
 #main-search {
 	display: flex;
 	width: 800px;
 	/* background-color: red; */
 }
 
-input.search-bar {
+input#search-bar {
 	background-color: rgb(211, 211, 211);
 	width: 100%;
 	height: 100%;
@@ -48,20 +54,63 @@ input.search-bar {
 	font-family: inherit;
 }
 
+#search-button {
+	background-color: rgb(211, 211, 211);
+	width: 55px;
+	height: 55px;
+	border-left: none;
+}
+
+#search-button:hover {
+	background-color: rgba(211, 211, 211, 0.713);
+	cursor: pointer;
+}
+#search-icon {
+	width: 25px;
+	height: 25px;
+}
+
+#search-button {
+	width: 50px;
+}
 .togglable {
 	align-self: flex-end;
 }
-#searched-container {
-	width: 80%;
+
+#all-contents-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* background-color: red; */
+}
+/* searched contents container */
+#contents-container {
+	/* width: 80%; */
 	/* background-color: lightgreen; */
 	display: flex;
 	flex-wrap: wrap;
 	padding-bottom: 50px;
+	justify-content: center;
+	min-width: calc(var(--container-min-width));
 }
+
+#recommend-button {
+	align-self: flex-end;
+	margin-top: 10px;
+}
+/* recommended contents  */
+#recommended-container {
+	display: flex;
+	justify-content: center;
+	/* background-color: maroon; */
+	width: var(--container-min-width);
+}
+
+/* each individual content ------------------------------------------------------- */
 .content-container {
 	width: 20%;
 	min-width: calc(var(--container-min-width) * 0.5);
-	/* background-color: maroon; */
+	/* background-color: yellow; */
 	display: flex;
 	flex-direction: column;
 	padding-left: 30px;
@@ -101,6 +150,7 @@ input.search-bar {
 	font-size: 0.75em;
 	padding-right: 1em;
 }
+/*------------------------------------------------------- */
 
 #togglable {
 	align-self: flex-end;
