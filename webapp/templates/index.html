@@ -7,6 +7,7 @@
     <!-- <script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}" ></script> -->
     <script type="text/javascript" src="{{ url_for('static', filename='getContents.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='formHandlers.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='sort.js') }}" ></script>
 
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" /> -->
     <title>Isitondisneyplus.com</title>
@@ -39,6 +40,11 @@
                 </select>
                 <div id="recommended-container">
                 </div>
+                <select name="sort-by" id="sort-by-select">
+                    <option value="title">Title</option>
+                    <option value="release_year">Release year</option>
+                    <option value="duration">Duration</option>
+                </select>
                 <div id="contents-container">           
                 </div>
             </div>    

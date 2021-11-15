@@ -12,6 +12,11 @@ const getAPIBaseUrl = () => {
 	return baseUrl;
 };
 
+//store searched results in localStorage to be used later
+const storeConentsInLocalStorage = (contents) => {
+	window.localStorage.setItem("searched-results", contents);
+};
+
 const getRecommended = () => {
 	const genre = document.getElementById("genre-select");
 	const genreString = genre.value;
@@ -68,6 +73,9 @@ const getByTitle = (titleString) => {
 						<div class="content-title">
 							<strong>${content.title}</strong>
 							(${content.type})
+							${content.release_year}
+							${content.duration}
+
 						</div>
 						<div class="content-subheading">
 							<strong>Director(s):</strong> ${content.directors}
@@ -88,6 +96,7 @@ const getByTitle = (titleString) => {
 			});
 			const contentsContainer = document.getElementById("contents-container");
 			contentsContainer.innerHTML = formattedContents;
+			storeConentsInLocalStorage(JSON.stringify(jsonContent));
 		});
 };
 
