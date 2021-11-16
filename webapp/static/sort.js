@@ -26,34 +26,19 @@ const sort = () => {
 						return 1;
 					}
 				});
-				const formattedContents = jsonContent.map((content) => {
-					return `
-					<div class="content-container">
-						<div class="content">
-							<div class="content-title">
-								<strong>${content.title}</strong>
-								(${content.type})
-								${content.release_year}
-							</div>
-							<div class="content-subheading">
-								<strong>Director(s):</strong> ${content.directors}
-							</div>
-							<div class="content-subheading">
-								<strong>Cast(s):</strong> ${content.cast}
-							</div>
-							<div class="content-subheading">
-								<strong>Genre(s):</strong> ${content.listed_in}
-							</div>
-							<div class="content-sypnopsis">
-								<strong>Sypnopsis:</strong>
-								${content.description}
-							</div>
-						</div>
-					</div> 
-				`;
+				let formattedShows = "";
+				let formattedMovies = "";
+				jsonContent.forEach((content) => {
+					if (content.type === "Movie") {
+						formattedMovies = formattedMovies + formatIntoHTML(content);
+					} else if (content.type === "TV Show") {
+						formattedShows = formattedShows + formatIntoHTML(content);
+					}
 				});
-				const contentsContainer = document.getElementById("contents-container");
-				contentsContainer.innerHTML = formattedContents;
+				const tvShowsContainer = document.getElementById("tvshows-container");
+				const moviesContainer = document.getElementById("movies-container");
+				tvShowsContainer.innerHTML = formattedShows;
+				moviesContainer.innerHTML = formattedMovies;
 			}
 			break;
 		case "release_year":
@@ -62,84 +47,77 @@ const sort = () => {
 					window.localStorage.getItem("searched-results")
 				);
 				const jsonContent = jsonStorage.sort((a, b) => {
-					if (a.release_year > b.release_year) {
+					if (a.release_year < b.release_year) {
 						return -1;
 					} else {
 						return 1;
 					}
 				});
-				const formattedContents = jsonContent.map((content) => {
-					return `
-                    <div class="content-container">
-                        <div class="content">
-                            <div class="content-title">
-                                <strong>${content.title}</strong>
-                                (${content.type})
-                                ${content.release_year}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Director(s):</strong> ${content.directors}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Cast(s):</strong> ${content.cast}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Genre(s):</strong> ${content.listed_in}
-                            </div>
-                            <div class="content-sypnopsis">
-                                <strong>Sypnopsis:</strong>
-                                ${content.description}
-                            </div>
-                        </div>
-                    </div> 
-                `;
+				let formattedShows = "";
+				let formattedMovies = "";
+				jsonContent.forEach((content) => {
+					if (content.type === "Movie") {
+						formattedMovies = formattedMovies + formatIntoHTML(content);
+					} else if (content.type === "TV Show") {
+						formattedShows = formattedShows + formatIntoHTML(content);
+					}
 				});
-				const contentsContainer = document.getElementById("contents-container");
-				contentsContainer.innerHTML = formattedContents;
+				const tvShowsContainer = document.getElementById("tvshows-container");
+				const moviesContainer = document.getElementById("movies-container");
+				tvShowsContainer.innerHTML = formattedShows;
+				moviesContainer.innerHTML = formattedMovies;
 			}
 			break;
 		case "duration":
 			if (window.localStorage.getItem("searched-results")) {
-				const jsonStorage = JSON.parse(
+				const jsonContent = JSON.parse(
 					window.localStorage.getItem("searched-results")
 				);
-				const jsonContent = jsonStorage.sort((a, b) => {
-					if (a.duration > b.duration) {
+
+				let movies = [];
+				let shows = [];
+				console.log(jsonContent, "check this");
+				jsonContent.forEach((content) => {
+					if (content.type === "Movie") {
+						movies = [...movies, content];
+						console.log(content.duration, typeof content.duration, "movies");
+					} else if (content.type === "TV Show") {
+						shows = [...shows, content];
+					}
+				});
+				console.log(movies, "check movies");
+				movies.sort((a, b) => {
+					if (Number(a.duration.min) < Number(b.duration.min)) {
 						console.log(a.duration, b.duration, "check this");
 						return -1;
 					} else {
 						return 1;
 					}
 				});
-				const formattedContents = jsonContent.map((content) => {
-					return `
-                    <div class="content-container">
-                        <div class="content">
-                            <div class="content-title">
-                                <strong>${content.title}</strong>
-                                (${content.type})
-                                ${content.release_year}
-                                ${content.duration}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Director(s):</strong> ${content.directors}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Cast(s):</strong> ${content.cast}
-                            </div>
-                            <div class="content-subheading">
-                                <strong>Genre(s):</strong> ${content.listed_in}
-                            </div>
-                            <div class="content-sypnopsis">
-                                <strong>Sypnopsis:</strong>
-                                ${content.description}
-                            </div>
-                        </div>
-                    </div> 
-                `;
+				shows.sort((a, b) => {
+					if (Number(a.duration.seasons) < Number(b.duration.seasons)) {
+						console.log(a.duration, b.duration, "check this");
+						return -1;
+					} else {
+						return 1;
+					}
 				});
-				const contentsContainer = document.getElementById("contents-container");
-				contentsContainer.innerHTML = formattedContents;
+
+				let formattedShows = "";
+				let formattedMovies = "";
+				movies.forEach(
+					(content) =>
+						(formattedMovies = formattedMovies + formatIntoHTML(content))
+				);
+				shows.forEach(
+					(content) =>
+						(formattedShows = formattedShows + formatIntoHTML(content))
+				);
+
+				const tvShowsContainer = document.getElementById("tvshows-container");
+				const moviesContainer = document.getElementById("movies-container");
+				tvShowsContainer.innerHTML = formattedShows;
+				moviesContainer.innerHTML = formattedMovies;
 			}
 			break;
 		default:

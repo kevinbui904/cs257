@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}" />
     <!-- <script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}" ></script> -->
+    <script type="text/javascript" src="{{ url_for('static', filename='htmlHelper.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='getContents.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='formHandlers.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='sort.js') }}" ></script>
@@ -17,41 +18,44 @@
         <h1>Does Disney Plus have it?</h1>
         <form id="search-container">
             <select name="genre" id="search-by">
-                <option value="title">By title:</option>
-                <option value="director">By director</option>
-                <option value="cast">By cast</option>
+                <option value="title">By Title</option>
+                <option value="director">By Director</option>
+                <option value="cast">By Cast</option>
             </select>
             <input id='search-bar' type="search" placeholder="search.."/>
             <button type="submit" id="search-button">
                 <img id="search-icon" src="../static/images/loupe.png" alt="search icon"/>
             </button>
         </form>
+        <div id="no-result-found">
+            No result found
+        </div>
         <div id="all-contents-container">
             <h2>Recommended</h2>
-                <button type="submit" id="recommend-button">
-                    Random recommendation!
-                </button>
-                <label for="genre">Genre:</label>
-                <select name="genre" id="genre-select">
-                    <option value="action">Action</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="documentary">Documentary</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="science fiction">Science Fiction</option>
-                </select>
-                <div id="recommended-container">
-                </div>
-                <select name="sort-by" id="sort-by-select">
-                    <option value="title">Title</option>
-                    <option value="release_year">Release year</option>
-                    <option value="duration">Duration</option>
-                </select>
-                <h2>Searched result</h2>
-                <div id="contents-container">
-                    <div id="tvshows-container"></div>
-                    <div id="movies-container"></div>
-                </div>
-            </div>    
+            <button type="submit" id="recommend-button">
+                Random recommendation!
+            </button>
+            <label for="genre">Genre:</label>
+            <select name="genre" id="genre-select">
+                <option value="action">Action</option>
+                <option value="comedy">Comedy</option>
+                <option value="documentary">Documentary</option>
+                <option value="mystery">Mystery</option>
+                <option value="science fiction">Science Fiction</option>
+            </select>
+            <div id="recommended-container"></div>
+            <select name="sort-by" id="sort-by-select">
+                <option value="title">Title</option>
+                <option value="release_year">Release year</option>
+                <option value="duration">Duration</option>
+            </select>
+            <h2>Searched result</h2>
+            <div id="contents-container">
+                <h2>TV Shows</h2>
+                <div id="tvshows-container"></div>
+                <h2>Movies</h2>
+                <div id="movies-container"></div>
+            </div>   
         </div>
     </div>
 </html>

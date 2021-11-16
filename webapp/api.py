@@ -34,14 +34,26 @@ def create_list(cursor):
         this_dict = {}
         this_dict['type'] = this_content[0]
         this_dict['title'] = this_content[1]
-        this_dict['directors'] = this_content[2]  # ***
+        this_dict['directors'] = this_content[2]
         this_dict['cast'] = this_content[3]
         this_dict['date_added'] = this_content[4]
         this_dict['release_year'] = this_content[5]
         this_dict['rating'] = this_content[6]
-        this_dict['duration'] = this_content[7]
-        this_dict['genres'] = this_content[8]  # *** genres
+        this_dict['genres'] = this_content[8]
         this_dict['description'] = this_content[9]
+
+        # this is for parsing the duration data, helping with sorting on front end
+        this_duration_dict = {}
+        if "min" in this_content[7]:
+            this_duration_dict['min'] = this_content[7].replace(
+                ' ', '').replace('min', '')
+        elif "Season" in this_content[7]:
+            this_duration_dict['seasons'] = this_content[7].replace(
+                ' ', '').replace('Season', '').replace('s', '')
+        else:
+            this_duration_dict['other_duration'] = this_content[7]
+        this_dict['duration'] = this_duration_dict
+
         content_list.append(this_dict)
 
     return content_list

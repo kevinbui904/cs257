@@ -20,12 +20,9 @@ const handleSearchSelection = (e) => {
 		switch (searchBy) {
 			case "title":
 				getByTitle(searchString);
-				console.log("this worked title");
 				break;
 			case "director":
 				getByDirector(searchString);
-				console.log("this worked director");
-
 				break;
 			case "cast":
 				getByCast(searchString);

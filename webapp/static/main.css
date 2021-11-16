@@ -119,6 +119,11 @@ input#search-bar {
 	width: var(--container-min-width);
 }
 
+#no-result-found {
+	display: none;
+	background-color: rgba(255, 92, 92, 0.857);
+}
+
 /* each individual content ------------------------------------------------------- */
 .content-container {
 	width: 20%;
