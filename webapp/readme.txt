@@ -3,9 +3,12 @@ AUTHORS: Kevin Bui, Robbie Young
 DATA: Information on current movies and TV shows on Disney+
 
 FEATURES CURRENTLY WORKING:
-- ('/') base endpoint, returns website url
-- ('/help') help endpoint, returns this readme.txt file
-- ('/recommended') A random recommendation of a movie or show, recommendation is based on a specific genre (Action, Comedy, Documentary, and Mystery are currently supported)
-- ('/directors/<directors_name>') Search of content directed by a given director
-- ('/titles/<titles_string>') Search of content which contain a given string in its title
-- ('/cast/<cast_name>') Search of content containing a given cast member
+- User can search for contents (TV shows or Movies) based on titles, directors, and cast members
+    If content does not exist, user will be prompted so
+- User can request a recommendation based on the genre they have selected (default is set to Action)
+- User can sort the displayed contents by title, release year, and duration (all in ascending order)
+
+FEATURES NOT YET IMPLEMENTED:
+- User is able to add movies to a "watched" list 
+- User is recommended contents based on genre reference and their personal "watched list"
+- User is able to see a graphical breakdown of the kind of contents they've watched based on duration, genres, and release year 

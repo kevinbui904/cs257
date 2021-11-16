@@ -61,19 +61,22 @@ def create_list(cursor):
 
 @api.route('/')
 def hello():
-    return 'Isitondisney.com'
+    return 'isitondisney.com'
 
 
 @api.route('/help')
 def help():
-    with open('readme.txt') as readme:
+    with open('./static/help.txt') as readme:
         return flask.Response(readme.read(), mimetype='text/plain')
 
 
 @api.route('/recommended')
 def genres():
     connection = connect(config_database, config_user, config_password)
-    genres = "%" + flask.request.args.get('genres') + "%"
+    if flask.request.args.get('genres') is not None:
+        genres = "%" + flask.request.args.get('genres') + "%"
+    else:
+        genres = "%" + "Action" + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
