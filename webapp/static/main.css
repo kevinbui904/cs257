@@ -86,12 +86,25 @@ input#search-bar {
 /* searched contents container */
 #contents-container {
 	/* width: 80%; */
-	/* background-color: lightgreen; */
+	background-color: lightgreen;
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 	padding-bottom: 50px;
 	justify-content: center;
 	min-width: calc(var(--container-min-width));
+}
+
+#tvshows-container {
+	background-color: aliceblue;
+	min-width: calc(var(--container-min-width));
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#movies-container {
+	min-width: calc(var(--container-min-width));
+	display: flex;
+	flex-wrap: wrap;
 }
 
 #recommend-button {

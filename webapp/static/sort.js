@@ -15,6 +15,46 @@ const sort = () => {
 	const sortBy = sortBySelect.value;
 	switch (sortBy) {
 		case "title":
+			if (window.localStorage.getItem("searched-results")) {
+				const jsonStorage = JSON.parse(
+					window.localStorage.getItem("searched-results")
+				);
+				const jsonContent = jsonStorage.sort((a, b) => {
+					if (a.title < b.title) {
+						return -1;
+					} else {
+						return 1;
+					}
+				});
+				const formattedContents = jsonContent.map((content) => {
+					return `
+					<div class="content-container">
+						<div class="content">
+							<div class="content-title">
+								<strong>${content.title}</strong>
+								(${content.type})
+								${content.release_year}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.listed_in}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
+						</div>
+					</div> 
+				`;
+				});
+				const contentsContainer = document.getElementById("contents-container");
+				contentsContainer.innerHTML = formattedContents;
+			}
 			break;
 		case "release_year":
 			if (window.localStorage.getItem("searched-results")) {

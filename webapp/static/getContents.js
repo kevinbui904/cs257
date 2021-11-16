@@ -20,7 +20,7 @@ const storeConentsInLocalStorage = (contents) => {
 const getRecommended = () => {
 	const genre = document.getElementById("genre-select");
 	const genreString = genre.value;
-	const url = `${getAPIBaseUrl()}/recommended?genre=${genreString}`;
+	const url = `${getAPIBaseUrl()}/recommended?genres=${genreString}`;
 	// send GET request to specified URL
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
@@ -42,7 +42,7 @@ const getRecommended = () => {
                             <strong>Cast(s):</strong> ${content.cast}
                         </div>
 						<div class="content-subheading">
-							<strong>Genre(s):</strong> ${content.listed_in}
+							<strong>Genre(s):</strong> ${content.genres}
 						</div>
                         <div class="content-sypnopsis">
                             <strong>Sypnopsis:</strong>
@@ -66,36 +66,71 @@ const getByTitle = (titleString) => {
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
 		.then((jsonContent) => {
-			const formattedContents = jsonContent.map((content) => {
-				return `
-				<div class="content-container">
-					<div class="content">
-						<div class="content-title">
-							<strong>${content.title}</strong>
-							(${content.type})
-							${content.release_year}
-							${content.duration}
-
+			let formattedShows = "";
+			let formattedMovies = "";
+			jsonContent.forEach((content) => {
+				if (content.type === "Movie") {
+					formattedMovies =
+						formattedMovies +
+						`
+					<div class="content-container">
+						<div class="content">
+							<div class="content-title">
+								<strong>${content.title}</strong>
+								(${content.type})
+								${content.release_year}
+								${content.duration}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.genres}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
 						</div>
-						<div class="content-subheading">
-							<strong>Director(s):</strong> ${content.directors}
+					</div> 
+				`;
+				} else if (content.type === "TV Show") {
+					formattedShows =
+						formattedShows +
+						`
+					<div class="content-container">
+						<div class="content">
+							<div class="content-title">
+								<strong>${content.title}</strong>
+								(${content.type})
+								${content.release_year}
+								${content.duration}
+							</div>
+							<div class="content-subheading">
+								<strong>Director(s):</strong> ${content.directors}
+							</div>
+							<div class="content-subheading">
+								<strong>Cast(s):</strong> ${content.cast}
+							</div>
+							<div class="content-subheading">
+								<strong>Genre(s):</strong> ${content.genres}
+							</div>
+							<div class="content-sypnopsis">
+								<strong>Sypnopsis:</strong>
+								${content.description}
+							</div>
 						</div>
-						<div class="content-subheading">
-							<strong>Cast(s):</strong> ${content.cast}
-						</div>
-						<div class="content-subheading">
-							<strong>Genre(s):</strong> ${content.listed_in}
-						</div>
-						<div class="content-sypnopsis">
-							<strong>Sypnopsis:</strong>
-							${content.description}
-						</div>
-					</div>
-				</div> 
-			`;
+					</div> 
+				`;
+				}
 			});
-			const contentsContainer = document.getElementById("contents-container");
-			contentsContainer.innerHTML = formattedContents;
+			const tvShowsContainer = document.getElementById("tvshows-container");
+			const moviesContainer = document.getElementById("movies-container");
+			tvShowsContainer.innerHTML = formattedShows;
+			moviesContainer.innerHTML = formattedMovies;
 			storeConentsInLocalStorage(JSON.stringify(jsonContent));
 		});
 };
@@ -123,7 +158,7 @@ const getByDirector = (directorString) => {
 							<strong>Cast(s):</strong> ${content.cast}
 						</div>
 						<div class="content-subheading">
-							<strong>Genre(s):</strong> ${content.listed_in}
+							<strong>Genre(s):</strong> ${content.genres}
 						</div>
 						<div class="content-sypnopsis">
 							<strong>Sypnopsis:</strong>
@@ -160,7 +195,7 @@ const getByCast = (castString) => {
 							<strong>Cast(s):</strong> ${content.cast}
 						</div>
 						<div class="content-subheading">
-							<strong>Genre(s):</strong> ${content.listed_in}
+							<strong>Genre(s):</strong> ${content.genres}
 						</div>
 						<div class="content-sypnopsis">
 							<strong>Sypnopsis:</strong>
