@@ -1,4 +1,5 @@
-AUTHORS: Kevin Bui, Robbie Young
+AUTHORS: Kevin Bui, Robbie Young 
+last updated Nov 16 2021
 
 API ENDPOINT: /api 
 

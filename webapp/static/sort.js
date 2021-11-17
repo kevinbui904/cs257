@@ -1,6 +1,6 @@
 /* sort.js 
  Written by Thien K. M. Bui and Robbie Young 
- Last updated Nov 15 2021 
+ Last updated Nov 16 2021 
 
  Simple sorting from localStorage
 */

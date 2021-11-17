@@ -1,6 +1,6 @@
 /*getContents.js 
 Thien K. M. Bui and Robbie Young 08 November 2021
-Updated 15 November 2021
+Updated 16 November 2021
 
 
 Helper methods to fetch data from our api.py
