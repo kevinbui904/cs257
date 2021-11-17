@@ -77,10 +77,34 @@ input#search-bar {
 	align-self: flex-end;
 }
 
-/* searched contents container */
+#no-result-found {
+	display: none;
+	background-color: rgba(255, 92, 92, 0.857);
+}
+
+/*Recommended container ---------------------------------------- */
+
+#recommended-container {
+	/* background-color: maroon; */
+	width: 100%;
+}
+#recommend-button {
+	align-self: flex-end;
+	margin-top: 10px;
+}
+/* recommended contents  */
+#recommended-content {
+	display: flex;
+	justify-content: center;
+	/* background-color: maroon; */
+	width: var(--container-min-width);
+}
+/*---------------------------------------- */
+
+/* searched contents container  -------------------------*/
 #contents-container {
 	/* width: 80%; */
-	background-color: lightgreen;
+	/* background-color: lightgreen; */
 	display: none;
 	flex-direction: column;
 	padding-bottom: 50px;
@@ -96,7 +120,7 @@ input#search-bar {
 	display: none;
 }
 #tvshows-container {
-	background-color: aliceblue;
+	/* background-color: aliceblue; */
 	min-width: calc(var(--container-min-width));
 	display: none;
 	flex-wrap: wrap;
@@ -110,22 +134,7 @@ input#search-bar {
 	flex-wrap: wrap;
 }
 
-#recommend-button {
-	align-self: flex-end;
-	margin-top: 10px;
-}
-/* recommended contents  */
-#recommended-container {
-	display: flex;
-	justify-content: center;
-	/* background-color: maroon; */
-	width: var(--container-min-width);
-}
-
-#no-result-found {
-	display: none;
-	background-color: rgba(255, 92, 92, 0.857);
-}
+/*---------------------------------------------------------*/
 
 /* each individual content ------------------------------------------------------- */
 .content-container {

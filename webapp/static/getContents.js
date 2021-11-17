@@ -52,7 +52,7 @@ const getRecommended = () => {
                 </div> 
             `;
 			const recommendedContainer = document.getElementById(
-				"recommended-container"
+				"recommended-content"
 			);
 			recommendedContainer.innerHTML = contentHTML;
 		});
