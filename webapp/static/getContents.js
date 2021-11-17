@@ -66,11 +66,14 @@ const getByTitle = (titleString) => {
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
 		.then((jsonContent) => {
-			const allContentsContainer = document.getElementById("no-result-found");
+			const noResultElement = document.getElementById("no-result-found");
+			const contentsContainer = document.getElementById("contents-container");
+
 			if (jsonContent.length === 0) {
-				allContentsContainer.style.display = "block";
+				noResultElement.style.display = "block";
+				contentsContainer.style.display = "none";
 			} else {
-				allContentsContainer.style.display = "none";
+				noResultElement.style.display = "none";
 				let formattedShows = "";
 				let formattedMovies = "";
 				jsonContent.forEach((content) => {
@@ -82,8 +85,27 @@ const getByTitle = (titleString) => {
 				});
 				const tvShowsContainer = document.getElementById("tvshows-container");
 				const moviesContainer = document.getElementById("movies-container");
+
+				const showsTag = document.getElementById("show-tag");
+				const moviesTag = document.getElementById("movies-tag");
+				if (formattedShows) {
+					showsTag.style.display = "block";
+					tvShowsContainer.style.display = "flex";
+				} else {
+					showsTag.style.display = "none";
+					tvShowsContainer.style.display = "none";
+				}
+				if (formattedMovies) {
+					moviesTag.style.display = "block";
+					moviesContainer.style.display = "flex";
+				} else {
+					moviesTag.style.display = "none";
+					moviesContainer.style.display = "none";
+				}
 				tvShowsContainer.innerHTML = formattedShows;
 				moviesContainer.innerHTML = formattedMovies;
+
+				contentsContainer.style.display = "flex";
 				storeConentsInLocalStorage(JSON.stringify(jsonContent));
 			}
 		});
@@ -97,11 +119,14 @@ const getByDirector = (directorString) => {
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
 		.then((jsonContent) => {
-			const allContentsContainer = document.getElementById("no-result-found");
+			const noResultElement = document.getElementById("no-result-found");
+			const contentsContainer = document.getElementById("contents-container");
+
 			if (jsonContent.length === 0) {
-				allContentsContainer.style.display = "block";
+				noResultElement.style.display = "block";
+				contentsContainer.style.display = "none";
 			} else {
-				allContentsContainer.style.display = "none";
+				noResultElement.style.display = "none";
 				let formattedShows = "";
 				let formattedMovies = "";
 				jsonContent.forEach((content) => {
@@ -113,8 +138,27 @@ const getByDirector = (directorString) => {
 				});
 				const tvShowsContainer = document.getElementById("tvshows-container");
 				const moviesContainer = document.getElementById("movies-container");
+
+				const showsTag = document.getElementById("show-tag");
+				const moviesTag = document.getElementById("movies-tag");
+				if (formattedShows) {
+					showsTag.style.display = "block";
+					tvShowsContainer.style.display = "flex";
+				} else {
+					showsTag.style.display = "none";
+					tvShowsContainer.style.display = "none";
+				}
+				if (formattedMovies) {
+					moviesTag.style.display = "block";
+					moviesContainer.style.display = "flex";
+				} else {
+					moviesTag.style.display = "none";
+					moviesContainer.style.display = "none";
+				}
 				tvShowsContainer.innerHTML = formattedShows;
 				moviesContainer.innerHTML = formattedMovies;
+
+				contentsContainer.style.display = "flex";
 				storeConentsInLocalStorage(JSON.stringify(jsonContent));
 			}
 		});
@@ -127,11 +171,14 @@ const getByCast = (castString) => {
 	fetch(url, { method: "GET" })
 		.then((response) => response.json())
 		.then((jsonContent) => {
-			const allContentsContainer = document.getElementById("no-result-found");
+			const noResultElement = document.getElementById("no-result-found");
+			const contentsContainer = document.getElementById("contents-container");
+
 			if (jsonContent.length === 0) {
-				allContentsContainer.style.display = "block";
+				noResultElement.style.display = "block";
+				contentsContainer.style.display = "none";
 			} else {
-				allContentsContainer.style.display = "none";
+				noResultElement.style.display = "none";
 				let formattedShows = "";
 				let formattedMovies = "";
 				jsonContent.forEach((content) => {
@@ -143,8 +190,27 @@ const getByCast = (castString) => {
 				});
 				const tvShowsContainer = document.getElementById("tvshows-container");
 				const moviesContainer = document.getElementById("movies-container");
+
+				const showsTag = document.getElementById("show-tag");
+				const moviesTag = document.getElementById("movies-tag");
+				if (formattedShows) {
+					showsTag.style.display = "block";
+					tvShowsContainer.style.display = "flex";
+				} else {
+					showsTag.style.display = "none";
+					tvShowsContainer.style.display = "none";
+				}
+				if (formattedMovies) {
+					moviesTag.style.display = "block";
+					moviesContainer.style.display = "flex";
+				} else {
+					moviesTag.style.display = "none";
+					moviesContainer.style.display = "none";
+				}
 				tvShowsContainer.innerHTML = formattedShows;
 				moviesContainer.innerHTML = formattedMovies;
+
+				contentsContainer.style.display = "flex";
 				storeConentsInLocalStorage(JSON.stringify(jsonContent));
 			}
 		});

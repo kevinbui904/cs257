@@ -76,19 +76,19 @@ const sort = () => {
 
 				let movies = [];
 				let shows = [];
-				console.log(jsonContent, "check this");
+				// console.log(jsonContent, "check this");
 				jsonContent.forEach((content) => {
 					if (content.type === "Movie") {
 						movies = [...movies, content];
-						console.log(content.duration, typeof content.duration, "movies");
+						// console.log(content.duration, typeof content.duration, "movies");
 					} else if (content.type === "TV Show") {
 						shows = [...shows, content];
 					}
 				});
-				console.log(movies, "check movies");
+				// console.log(movies, "check movies");
 				movies.sort((a, b) => {
 					if (Number(a.duration.min) < Number(b.duration.min)) {
-						console.log(a.duration, b.duration, "check this");
+						// console.log(a.duration, b.duration, "check this");
 						return -1;
 					} else {
 						return 1;
@@ -96,7 +96,7 @@ const sort = () => {
 				});
 				shows.sort((a, b) => {
 					if (Number(a.duration.seasons) < Number(b.duration.seasons)) {
-						console.log(a.duration, b.duration, "check this");
+						// console.log(a.duration, b.duration, "check this");
 						return -1;
 					} else {
 						return 1;

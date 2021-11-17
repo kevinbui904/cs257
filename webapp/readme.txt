@@ -12,3 +12,4 @@ FEATURES NOT YET IMPLEMENTED:
 - User is able to add movies to a "watched" list 
 - User is recommended contents based on genre reference and their personal "watched list"
 - User is able to see a graphical breakdown of the kind of contents they've watched based on duration, genres, and release year 
+- Contents contains images associated with the movie/show instead of being purely textual

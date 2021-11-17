@@ -77,33 +77,36 @@ input#search-bar {
 	align-self: flex-end;
 }
 
-#all-contents-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	/* background-color: red; */
-}
 /* searched contents container */
 #contents-container {
 	/* width: 80%; */
 	background-color: lightgreen;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	padding-bottom: 50px;
 	justify-content: center;
+	width: 100%;
 	min-width: calc(var(--container-min-width));
 }
 
+#sort-by-select {
+	width: fit-content;
+}
+#show-tag {
+	display: none;
+}
 #tvshows-container {
 	background-color: aliceblue;
 	min-width: calc(var(--container-min-width));
-	display: flex;
+	display: none;
 	flex-wrap: wrap;
 }
-
+#movies-tag {
+	display: none;
+}
 #movies-container {
 	min-width: calc(var(--container-min-width));
-	display: flex;
+	display: none;
 	flex-wrap: wrap;
 }
 
@@ -126,14 +129,15 @@ input#search-bar {
 
 /* each individual content ------------------------------------------------------- */
 .content-container {
-	width: 20%;
-	min-width: calc(var(--container-min-width) * 0.5);
-	/* background-color: yellow; */
+	/* min-width: calc(var(--container-min-width) * 0.5); */
+	width: 350px;
+	/* background-color: red; */
 	display: flex;
 	flex-direction: column;
 	padding-left: 30px;
 	margin-left: 40px;
 	margin-top: 20px;
+	border: 3px solid black;
 }
 .content-header {
 	width: 100%;
@@ -147,12 +151,11 @@ input#search-bar {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-	width: 90%;
-	height: 400px;
-	/* background-color: lightgreen; */
+	width: 82%;
+	height: 350px;
+	/* background-color: yellow; */
 	align-self: center;
-	padding-left: 20px;
-	border: 3px solid black;
+	/* padding-left: 20px; */
 }
 
 .content-title {
@@ -162,6 +165,8 @@ input#search-bar {
 	font-size: 0.75em;
 	margin-left: 1.75em;
 	padding-right: 1em;
+	/* background-color: maroon; */
+	margin-bottom: 0;
 }
 
 .content-sypnopsis {
@@ -170,7 +175,7 @@ input#search-bar {
 }
 /*------------------------------------------------------- */
 
-#togglable {
+/* #togglable {
 	align-self: flex-end;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -193,18 +198,8 @@ input#search-bar {
 	padding-top: 10px;
 	padding-bottom: 20px;
 	border: 2px solid black;
-}
+} */
 
-.form-input {
-	margin-left: 10px;
-	display: flex;
-}
-
-.uniform-label {
-	display: block;
-	width: 6em;
-	/* background-color: red; */
-}
 #form-submit {
 	width: 20%;
 	height: 2.5em;
@@ -216,21 +211,4 @@ input#search-bar {
 
 #form-submit:hover {
 	cursor: pointer;
-}
-
-#repopulate-container {
-	width: 80%;
-	display: flex;
-	justify-content: space-between;
-	/* background-color: red; */
-}
-
-#pick-for-me {
-	border: 2px solid black;
-	padding: 3px 3px 3px 3px;
-}
-
-#pick-for-me:hover {
-	cursor: pointer;
-	background-color: rgb(211, 211, 211);
 }

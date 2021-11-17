@@ -30,32 +30,40 @@
         <div id="no-result-found">
             No result found
         </div>
-        <div id="all-contents-container">
-            <h2>Recommended</h2>
-            <button type="submit" id="recommend-button">
-                Random recommendation!
-            </button>
-            <label for="genre">Genre:</label>
-            <select name="genre" id="genre-select">
-                <option value="action">Action</option>
-                <option value="comedy">Comedy</option>
-                <option value="documentary">Documentary</option>
-                <option value="mystery">Mystery</option>
-                <option value="science fiction">Science Fiction</option>
-            </select>
-            <div id="recommended-container"></div>
-            <select name="sort-by" id="sort-by-select">
-                <option value="title">Title</option>
-                <option value="release_year">Release year</option>
-                <option value="duration">Duration</option>
-            </select>
-            <h2>Searched result</h2>
-            <div id="contents-container">
-                <h2>TV Shows</h2>
-                <div id="tvshows-container"></div>
-                <h2>Movies</h2>
-                <div id="movies-container"></div>
-            </div>   
-        </div>
+    
+        <h2>Recommended</h2>
+        <button type="submit" id="recommend-button">
+            Random recommendation!
+        </button>
+        <label for="genre">Genre:</label>
+        <select name="genre" id="genre-select">
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="documentary">Documentary</option>
+            <option value="mystery">Mystery</option>
+            <option value="science fiction">Science Fiction</option>
+        </select>
+        
+        <div id="recommended-container"></div>
+        <div id="contents-container">
+            <!-- breaking out of contents-container flex  -->
+            <div>
+                <label for="sort-by">Sort by</label>
+                <select name="sort-by" id="sort-by-select">
+                    <option value="title">Title</option>
+                    <option value="release_year">Release year</option>
+                    <option value="duration">Duration</option>
+                </select>
+            </div>
+            <h2 id="show-tag">TV Shows</h2>
+            <div id="tvshows-container">
+            </div>
+            <h2 id="movies-tag">Movies</h2>
+            <div id="movies-container">     
+            </div>
+        </div>   
+        
+
+     
     </div>
 </html>
