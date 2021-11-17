@@ -85,8 +85,8 @@ input#search-bar {
 /*Recommended container ---------------------------------------- */
 
 #recommended-container {
-	/* background-color: maroon; */
 	width: 100%;
+	/* background-color: red; */
 }
 #recommend-button {
 	align-self: flex-end;
@@ -94,10 +94,12 @@ input#search-bar {
 }
 /* recommended contents  */
 #recommended-content {
+	/* width: 150%; */
+	background-color: rgb(230, 230, 230);
 	display: flex;
 	justify-content: center;
+	padding-bottom: 20px;
 	/* background-color: maroon; */
-	width: var(--container-min-width);
 }
 /*---------------------------------------- */
 
@@ -120,18 +122,26 @@ input#search-bar {
 	display: none;
 }
 #tvshows-container {
+	border: 8px dashed rgb(141, 141, 141);
+	border-left: none;
+	border-right: none;
 	/* background-color: aliceblue; */
 	min-width: calc(var(--container-min-width));
 	display: none;
 	flex-wrap: wrap;
+	padding-bottom: 20px;
 }
 #movies-tag {
 	display: none;
 }
 #movies-container {
+	border: 8px dashed rgb(141, 141, 141);
+	border-left: none;
+	border-right: none;
 	min-width: calc(var(--container-min-width));
 	display: none;
 	flex-wrap: wrap;
+	padding-bottom: 20px;
 }
 
 /*---------------------------------------------------------*/
@@ -184,6 +194,11 @@ input#search-bar {
 }
 /*------------------------------------------------------- */
 
+.recommended {
+	width: 50%;
+	font-size: 22px;
+	background-color: white;
+}
 /* #togglable {
 	align-self: flex-end;
 	margin-top: 5px;

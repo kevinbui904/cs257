@@ -29,7 +29,7 @@ const getRecommended = () => {
 			//internal agreement, API will ONLY ever return 1 object in a list of size 1
 			const content = jsonResponse[0];
 			contentHTML = `
-                <div class="content-container">
+                <div class="content-container recommended">
                     <div class="content">
                         <div class="content-title">
                             <strong>${content.title}</strong>
