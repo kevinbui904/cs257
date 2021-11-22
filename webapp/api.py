@@ -16,6 +16,7 @@ from config import password as config_password
 
 api = flask.Blueprint('api', __name__)
 
+
 def connect(connect_database, connect_user, connect_password):
     try:
         connection = psycopg2.connect(
@@ -41,11 +42,14 @@ def create_list(cursor):
         this_dict['genres'] = this_content[8]
         this_dict['description'] = this_content[9]
 
-        this_duration_dict = {} # this is for parsing the duration data, helping with sorting on front end
-        if this_content[7].contains('min')
-            this_duration_dict['min'] = this_content[7].replace(' ', '').replace('min', '')
-        else if this_content[7].contains('Seasons'):
-            this_duration_dict['Seasons'] = this_content[7].replace(' ', '').replace('Seasons', '')
+        # this is for parsing the duration data, helping with sorting on front end
+        this_duration_dict = {}
+        if "min" in this_content[7]:
+            this_duration_dict['min'] = this_content[7].replace(
+                ' ', '').replace('min', '')
+        elif "Season" in this_content[7]:
+            this_duration_dict['seasons'] = this_content[7].replace(
+                ' ', '').replace('Season', '').replace('s', '')
         else:
             this_duration_dict['other_duration'] = this_content[7]
         this_dict['duration'] = this_duration_dict
@@ -57,19 +61,22 @@ def create_list(cursor):
 
 @api.route('/')
 def hello():
-    return 'Isitondisney.com'
+    return 'isitondisney.com'
 
 
 @api.route('/help')
 def help():
-    with open('readme.txt') as readme:
-        return flask.Response(readme.read(), mimetype = 'text/plain')
+    with open('./static/help.txt') as readme:
+        return flask.Response(readme.read(), mimetype='text/plain')
 
 
 @api.route('/recommended')
 def genres():
     connection = connect(config_database, config_user, config_password)
-    genres = "%" + flask.request.args.get('genres') + "%"
+    if flask.request.args.get('genres') is not None:
+        genres = "%" + flask.request.args.get('genres') + "%"
+    else:
+        genres = "%" + "Action" + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id
@@ -124,9 +131,9 @@ def director(directors_name):
 
 
 @api.route('/titles/<titles_string>')
-def titles(title_string):
+def titles(titles_string):
     connection = connect(config_database, config_user, config_password)
-    title_formatted = "%" + titles_string+ "%"
+    title_formatted = "%" + titles_string + "%"
     query = '''SELECT type, title, director, actors, date_added, release_year, rating, duration, genres, description
                 FROM countries, date_added, genres, rating, super_table, type
                 WHERE super_table.countries_id = countries.id

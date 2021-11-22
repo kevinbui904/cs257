@@ -5,134 +5,66 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}" />
     <!-- <script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}" ></script> -->
+    <script type="text/javascript" src="{{ url_for('static', filename='htmlHelper.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='getContents.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='formHandlers.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='sort.js') }}" ></script>
+
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" /> -->
     <title>Isitondisneyplus.com</title>
 </head>
 
-    <!-- <div id="container">
+    <div id="container">
         <h1>Does Disney Plus have it?</h1>
-        <div class='search-bar'>
-            <div id="search-container">
-                <input class='search-bar' type="search" placeholder="search..">
-            </div> -->
-            <!-- togglable -->
-            <!-- <div id="togglable">advanced</div>
-            <form action="" method="get" id="advanced-container"> -->
-                <!-- checkboxes -->
-                <!-- <div class="form-input">
-                    <label for="movies">Movies </label>
-                    <input type="checkbox" name="movies" class="form-input" id="form-movies">
-
-                    <label for="shows">TV shows </label>
-                    <input type="checkbox" name="shows" class="form-input" id="form-shows">
-                </div> -->
-                <!-- string searches -->
-                <!-- <div class="form-input">
-                    <label class="uniform-label" for="title">Title: </label>
-                    <input type="text" name="title" id="form-title">
-                </div>
-
-                <div class="form-input">
-                    <label class="uniform-label" for="directors">Director(s): </label>
-                    <input type="text" name="directors"  id="form-directors">
-                </div>
-
-                <div class="form-input" >
-                    <label class="uniform-label" for="cast">Cast(s): </label>
-                    <input type="text" name="cast" id="form-cast">
-                </div> -->
-
-                <!-- select based on presets, wrap in div to break out of flex direction-->
-                <!-- <div class="form-input">
-                    <label for="sort-by">Sort by:</label>
-                    <select name="sort-by" id="sort-by-select">
-                        <option value="title">Title</option>
-                        <option value="release-year">Release year</option>
-                        <option value="rating">Rating</option>
-                        <option value="duration">Duration</option>
-
-                    </select>
-                </div> -->
-
-                <!-- submit button -->
-                <!-- <input type="submit" value="Search" id="form-submit">
-            </form>
-            <div id="contents-container">
-                <div id="contents-header">
-                    <div id="repopulate-container">
-                        <div id="sort-by-container">
-                            <label for="sort-by">Sort by:</label>
-                            <select name="sort-by" id="sort-by-select">
-                                <option value="title">Title</option>
-                                <option value="release-year">Release year</option>
-                                <option value="rating">Rating</option>
-                                <option value="duration">Duration</option>
-                            </select>
-                        </div>
-                        <div id="pick-for-me">
-                            Pick for me!
-                        </div>
-                    </div>
-                    <div id="recommended-container">
-                    </div>
-                    <div id="searched-container">
-                        
-                    </div>
-                </div>    
-            </div>
-    </div> -->
-    <h1>
-        CS 251: Software Design Carleton College Fall '21
-    </h1>
-    <h2>
-        Front end for end-to-end assignment
-    </h2>
-
-    <button type="submit" id="recommend-button">
-        Random recommendation!
-    </button>
-      <!-- select based on presets, wrap in div to break out of flex direction-->
-    <label for="genre">Genre:</label>
-    <select name="sort-by" id="genre-select">
-        <option value="action">Action</option>
-        <option value="comedy">Comedy</option>
-        <option value="documentary">Documentary</option>
-        <option value="mystery">Mystery</option>
-        <option value="science fiction">Science Fiction</option>
+        <form id="search-container">
+            <select name="genre" id="search-by">
+                <option value="title">By Title</option>
+                <option value="director">By Director</option>
+                <option value="cast">By Cast</option>
+            </select>
+            <input id='search-bar' type="search" placeholder="search.."/>
+            <button type="submit" id="search-button">
+                <img id="search-icon" src="../static/images/loupe.png" alt="search icon"/>
+            </button>
+        </form>
+        <div id="no-result-found">
+            No result found
+        </div>
         
-    </select>
+        <div id="recommended-container">  
+            <h2>Recommended</h2>
+            <button type="submit" id="recommend-button">
+                Random recommendation!
+            </button>
+            <label for="genre">Genre:</label>
+            <select name="genre" id="genre-select">
+                <option value="action">Action</option>
+                <option value="comedy">Comedy</option>
+                <option value="documentary">Documentary</option>
+                <option value="mystery">Mystery</option>
+                <option value="science fiction">Science Fiction</option>
+            </select>
+            <div id="recommended-content"></div>
+        </div>
+        <div id="contents-container">
+            <!-- breaking out of contents-container flex  -->
+            <div>
+                <label for="sort-by">Sort by</label>
+                <select name="sort-by" id="sort-by-select">
+                    <option value="title">Title</option>
+                    <option value="release_year">Release year</option>
+                    <option value="duration">Duration</option>
+                </select>
+            </div>
+            <h2 id="show-tag">TV Shows</h2>
+            <div id="tvshows-container">
+            </div>
+            <h2 id="movies-tag">Movies</h2>
+            <div id="movies-container">     
+            </div>
+        </div>   
+        
 
-    <form>
-        <label>title
-            <input id="by-title-input">
-        </label>
-        <button id="by-title-button">
-            search by title
-        </button>
-    </form>
-    <form>
-        <label>director
-            <input id="by-director-input">
-        </label>
-        <button id="by-director-button">
-            search by directors
-        </button>
-
-    </form>
-    <form>
-        <label>cast
-            <input id="by-cast-input">
-        </label>   
-        <button id='by-cast-button'>
-            search by cast 
-        </button>
-
-    </form>
-    <div id="recommended-container" style="background-color:lightgoldenrodyellow">
-
-    </div>
-    <div id="contents-container" style="background-color:lightblue">
-
+     
     </div>
 </html>
