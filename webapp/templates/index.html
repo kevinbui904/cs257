@@ -15,40 +15,42 @@
 </head>
 
     <div id="container">
-        <h1>Does Disney Plus have it?</h1>
-        <form id="search-container">
-            <select name="genre" id="search-by">
-                <option value="title">By Title</option>
-                <option value="director">By Director</option>
-                <option value="cast">By Cast</option>
-            </select>
-            <input id='search-bar' type="search" placeholder="search.."/>
-            <button type="submit" id="search-button">
-                <img id="search-icon" src="../static/images/loupe.png" alt="search icon"/>
-            </button>
-        </form>
+        <header>
+            <h1 id="logo">What2Watch.tv</h1>
+            <form id="search-container">
+                <select name="genre" id="search-by">
+                    <option value="title">By Title</option>
+                    <option value="director">By Director</option>
+                    <option value="cast">By Cast</option>
+                </select>
+                <input id='search-bar' type="search" placeholder="search.."/>
+                <button type="submit" id="search-button">
+                    <img id="search-icon" src="../static/images/loupe.png" alt="search icon"/>
+                </button>
+            </form>
+        </header>
         <div id="no-result-found">
             No result found
-        </div>
-        
+        </div>      
         <div id="recommended-container">  
             <h2>Recommended</h2>
+            <label for="genre">Genre:
+                <select name="genre" id="genre-select">
+                    <option value="action">Action</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="documentary">Documentary</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="science fiction">Science Fiction</option>
+                </select>
+            </label>
             <button type="submit" id="recommend-button">
-                Random recommendation!
+                More
             </button>
-            <label for="genre">Genre:</label>
-            <select name="genre" id="genre-select">
-                <option value="action">Action</option>
-                <option value="comedy">Comedy</option>
-                <option value="documentary">Documentary</option>
-                <option value="mystery">Mystery</option>
-                <option value="science fiction">Science Fiction</option>
-            </select>
-            <div id="recommended-content"></div>
+            <div id="recommended-contents"></div>
         </div>
         <div id="contents-container">
             <!-- breaking out of contents-container flex  -->
-            <div>
+            <div id="sort-container">
                 <label for="sort-by">Sort by</label>
                 <select name="sort-by" id="sort-by-select">
                     <option value="title">Title</option>
@@ -63,8 +65,8 @@
             <div id="movies-container">     
             </div>
         </div>   
-        
-
-     
     </div>
+    <footer>
+        By Robbie Young and Thien Bui CS 257: Software Design Carleton College
+    </footer>
 </html>

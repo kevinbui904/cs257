@@ -1,6 +1,6 @@
 /*getContents.js 
 Thien K. M. Bui and Robbie Young 08 November 2021
-Updated 16 November 2021
+Updated 23 November 2021
 
 
 Helper methods to fetch data from our api.py
@@ -29,7 +29,7 @@ const getRecommended = () => {
 			//internal agreement, API will ONLY ever return 1 object in a list of size 1
 			const content = jsonResponse[0];
 			contentHTML = `
-                <div class="content-container recommended">
+                <div class="content-container">
                     <div class="content">
                         <div class="content-title">
                             <strong>${content.title}</strong>
@@ -52,7 +52,7 @@ const getRecommended = () => {
                 </div> 
             `;
 			const recommendedContainer = document.getElementById(
-				"recommended-content"
+				"recommended-contents"
 			);
 			recommendedContainer.innerHTML = contentHTML;
 		});
@@ -70,7 +70,7 @@ const getByTitle = (titleString) => {
 			const contentsContainer = document.getElementById("contents-container");
 
 			if (jsonContent.length === 0) {
-				noResultElement.style.display = "block";
+				noResultElement.style.display = "flex";
 				contentsContainer.style.display = "none";
 			} else {
 				noResultElement.style.display = "none";
@@ -123,7 +123,7 @@ const getByDirector = (directorString) => {
 			const contentsContainer = document.getElementById("contents-container");
 
 			if (jsonContent.length === 0) {
-				noResultElement.style.display = "block";
+				noResultElement.style.display = "flex";
 				contentsContainer.style.display = "none";
 			} else {
 				noResultElement.style.display = "none";
@@ -175,7 +175,7 @@ const getByCast = (castString) => {
 			const contentsContainer = document.getElementById("contents-container");
 
 			if (jsonContent.length === 0) {
-				noResultElement.style.display = "block";
+				noResultElement.style.display = "flex";
 				contentsContainer.style.display = "none";
 			} else {
 				noResultElement.style.display = "none";
