@@ -14,7 +14,7 @@ rating_dict = {} # {'rating' : id}
 genres_dict = {} # {'genres' : id}
 super_table_dict = {} # {'type_id|title|director|actors|countries_id|date_added|release_year|rating_id|duration|genre_id|description' : id}
 
-# either clears the file if already existing or creates a new file
+# either clears the csv file if already existing or creates a new file
 def create_files():
     with open('type.csv', 'w') as file:
         file.truncate()
@@ -29,6 +29,7 @@ def create_files():
     with open('super_table.csv', 'w') as file:
         file.truncate()
 
+# loads the dictionaries
 def load(csv_file_name):
     with open(csv_file_name, 'r', newline='') as file:
         next(file)
@@ -41,6 +42,7 @@ def load(csv_file_name):
             this_genres_id = populate_genres(genres=row[10])
             populate_super_table(type_id=this_type_id, title=row[2], director=row[3], cast=row[4], countries_id=this_countries_id, date_added_id=this_date_added_id, release_year=row[7], rating_id=this_rating_id, duration=row[9], genres_id=this_genres_id, description=row[11])
     
+    # following writes to the new csv files with the now loaded and formatted data
     write_to('type.csv', type_dict)
     write_to('countries.csv', countries_dict)
     write_to('date_added.csv', date_added_dict)
@@ -48,6 +50,7 @@ def load(csv_file_name):
     write_to('genres.csv', genres_dict)
     write_to('super_table.csv', super_table_dict)
 
+# all populate methods, except for populate_super_table check for duplicates (and if so returns id number), and if not creates new key value pair and returns new id number
 def populate_type(type_var):
     if type_var in type_dict:
         return type_dict[type_var]
@@ -88,11 +91,13 @@ def populate_genres(genres):
     genres_dict[genres] = id
     return id
 
+# creates new key value pair of each entry; note there can be duplicates
 def populate_super_table(type_id, title, director, cast, countries_id, date_added_id, release_year, rating_id, duration, genres_id, description):
     data = str(type_id)+'|'+title+'|'+director+'|'+cast+'|'+str(countries_id)+'|'+str(date_added_id)+'|'+release_year+'|'+str(rating_id)+'|'+duration+'|'+str(genres_id)+'|'+description
     id = len(super_table_dict) + 1
     super_table_dict[data] = str(id)
 
+# writes to csv file with the data stored in the dictionary
 def write_to(file, dictionary):
     with open(file, 'a', newline='') as file:
         writer = csv.writer(file)
@@ -104,7 +109,6 @@ def write_to(file, dictionary):
 def main():
     create_files()
     load('disney_plus_titles.csv')
-
     print('convert.py done')
 
 if __name__ == '__main__':
