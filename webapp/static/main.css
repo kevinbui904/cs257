@@ -1,7 +1,7 @@
 /*
 main.css
 Written by Thien K. M. Bui and Robbie Young  
-Last edited Nov 15, 2021
+Last edited Nov 23, 2021
 */
 
 #container {
@@ -166,7 +166,6 @@ input#search-bar {
 .content-header {
 	width: 100%;
 	margin-right: 50px;
-	/* background-color: lightgoldenrodyellow; */
 	display: flex;
 	justify-content: space-between;
 }
@@ -178,7 +177,6 @@ input#search-bar {
 	width: 82%;
 	height: 350px;
 	align-self: center;
-	/* padding-left: 20px; */
 }
 
 .content-title {
@@ -188,7 +186,6 @@ input#search-bar {
 	font-size: 0.75em;
 	margin-left: 1.75em;
 	padding-right: 1em;
-	/* background-color: maroon; */
 	margin-bottom: 0;
 }
 
