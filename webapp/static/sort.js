@@ -1,6 +1,6 @@
 /* sort.js 
  Written by Thien K. M. Bui and Robbie Young 
- Last updated Nov 16 2021 
+ Last updated Nov 23 2021 
 
  Simple sorting from localStorage
 */
@@ -10,6 +10,8 @@ const initSortBy = () => {
 	sortBySelect.onchange = sort;
 };
 
+//use built in Array.sort() method to sort a list retrieved from localStorage
+//after sorting, the sort function will change DOM to reflect the new sorted order
 const sort = () => {
 	const sortBySelect = document.getElementById("sort-by-select");
 	const sortBy = sortBySelect.value;
@@ -76,19 +78,16 @@ const sort = () => {
 
 				let movies = [];
 				let shows = [];
-				// console.log(jsonContent, "check this");
 				jsonContent.forEach((content) => {
 					if (content.type === "Movie") {
 						movies = [...movies, content];
-						// console.log(content.duration, typeof content.duration, "movies");
 					} else if (content.type === "TV Show") {
 						shows = [...shows, content];
 					}
 				});
-				// console.log(movies, "check movies");
+				//sort by duration, need to typecast into Number since durations are stored as strings
 				movies.sort((a, b) => {
 					if (Number(a.duration.min) < Number(b.duration.min)) {
-						// console.log(a.duration, b.duration, "check this");
 						return -1;
 					} else {
 						return 1;
@@ -96,7 +95,6 @@ const sort = () => {
 				});
 				shows.sort((a, b) => {
 					if (Number(a.duration.seasons) < Number(b.duration.seasons)) {
-						// console.log(a.duration, b.duration, "check this");
 						return -1;
 					} else {
 						return 1;
@@ -105,6 +103,7 @@ const sort = () => {
 
 				let formattedShows = "";
 				let formattedMovies = "";
+
 				movies.forEach(
 					(content) =>
 						(formattedMovies = formattedMovies + formatIntoHTML(content))
